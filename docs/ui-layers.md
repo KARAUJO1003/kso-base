@@ -18,12 +18,15 @@ dependência instalada, são código copiado para dentro do repositório
    mora aqui. É o único lugar onde customização de comportamento deve
    acontecer.
 
-3. **Tokens CSS (`src/themes/brand.css` e `globals.css`) — aparência.**
-   Toda customização visual (cor, raio de borda, etc.) é feita trocando
-   valores de variável CSS, nunca editando um `.tsx` de componente.
+3. **Tokens CSS (`src/themes/brand.css` e `src/themes/colors.css`) —
+   aparência.** Toda customização visual (cor, raio de borda, etc.) é feita
+   trocando valores de variável CSS, nunca editando um `.tsx` de componente.
    `brand.css` é a única camada que deve mudar por cliente/projeto —
-   `globals.css` referencia esses tokens por nome semântico e não deveria
-   precisar de edição.
+   `colors.css` referencia esses tokens por nome semântico e não deveria
+   precisar de edição manual (a base de `colors.css` vem de um preset shadcn,
+   via `npx shadcn@latest init --preset <id>`; atualiza rodando o CLI de
+   novo, não editando à mão). `globals.css` só importa as duas e faz a
+   plumbing (`@theme inline`, reset) — nunca tem token de cor direto.
 
 ## Por que isso importa
 
