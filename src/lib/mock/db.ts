@@ -39,7 +39,10 @@ export const ROUTE_TO_COLLECTION: Record<string, string> = {
 
 type MockDatabase = Record<string, any[]>;
 
-const STORAGE_KEY = "kso-mock-db:v1";
+// Suba a versão sempre que mudar o shape/comportamento do seed (ver
+// seedDatabase abaixo) — invalida o banco fake já salvo em quem já visitou
+// o site, forçando gerar de novo com as mudanças.
+const STORAGE_KEY = "kso-mock-db:v2";
 
 function seedDatabase(): MockDatabase {
   const pessoas = times(30, createPessoa);

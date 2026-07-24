@@ -145,11 +145,11 @@ export function createLoja(index: number, gruposLojas: IGrupoLoja[]): ILoja {
     updated_by: null,
     created_by: "seed",
     codigo: sequentialCodigo("LJ", index, 3),
-    branding: {
-      cor_primaria: faker.color.rgb(),
-      cor_secundaria: faker.color.rgb(),
-      cor_contraste: "#FFFFFF",
-    },
+    // Sem branding: cada loja tem cor_primaria própria e sobrescreve o tema
+    // inteiro em runtime (ver src/lib/store-branding.ts) — cor aleatória aqui
+    // deixaria o demo com uma paleta diferente a cada loja/seed, brigando
+    // com o preset de src/themes/colors.css. Deixe undefined pra mostrar o
+    // tema padrão do template de forma consistente.
     ...fakeTimestamps(),
   };
 }
