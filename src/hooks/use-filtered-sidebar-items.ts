@@ -18,13 +18,13 @@ export type SidebarItemConfig = {
   /**
    * Feature flag key para controlar visibilidade do item.
    * Se definido, o item só será exibido se a flag estiver ativa.
-   * @example "modules.cadastros.estadias.visualizar"
+   * @example "modules.organizacao.cargos.visualizar"
    */
   featureFlag?: FlagKeyType;
   /**
    * Permissão necessária para visualizar o item.
    * Pode ser uma string ou array de strings no formato "grupo:acao".
-   * @example "estadias:ver" ou ["estadias:ver", "estadias:criar"]
+   * @example "cargos:ver" ou ["cargos:ver", "cargos:criar"]
    */
   permission?: PermissionInput | PermissionInput[];
   /**

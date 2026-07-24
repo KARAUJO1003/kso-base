@@ -68,8 +68,9 @@ export function mapPermissionsToModules(
 function removePagesWithInvalidURL(url: string) {
   return [
     ...SIDEBAR_PAGES.navMain,
-    ...SIDEBAR_PAGES.navSecondary,
-    ...SIDEBAR_PAGES.controleUsuarios,
+    ...SIDEBAR_PAGES.organizacao,
+    ...SIDEBAR_PAGES.inventario,
+    ...SIDEBAR_PAGES.administrativo,
   ].filter((page) => page.url !== url);
 }
 export const APP_PAGES = removePagesWithInvalidURL("#");

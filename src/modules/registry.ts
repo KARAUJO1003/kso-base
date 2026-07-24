@@ -152,7 +152,7 @@ const MODULE_DEFINITIONS: ModuleDefinition[] = [
   {
     key: "gerencia",
     label: "Gerências",
-    route: "/gerencia",
+    route: "/gerencias",
     icon: IconBriefcase,
     category: "organizacao",
     permissionBase: "gerencia",
