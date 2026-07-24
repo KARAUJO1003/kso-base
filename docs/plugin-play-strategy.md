@@ -123,14 +123,27 @@ Pesquisado no mercado (não é invenção interna — é feature oficial do shad
 2. Renomear tokens base de `brand.css` para algo neutro (pré-requisito para white-label).
 3. Centralizar branding build-time em `.env` + `brand.config.ts`.
 4. Extrair `lojas`/offline do `use-crud` core para opt-in.
-5. Criar o registry único de módulos e migrar sidebar/permissões para ler dele.
-6. (Exploratório) Prototipar um registry shadcn privado `@corpus`.
+5. Criar o registry único de módulos e migrar sidebar/permissões para ler dele. **Feito**
+   (`src/modules/registry.ts`).
+6. Prototipar um registry shadcn privado `@kso`. **Feito (piloto) — ver `docs/registry.md`**:
+   `registry.json` + pipeline em `scripts/registry/` cobrindo o kernel base (`@kso/base`)
+   e 6 dos 13 módulos de `(cadastros)` (lojas, depositos, tabelas-precos, itens,
+   grupos-itens, unidade-medida), com granularidade por módulo individual, pelo grupo
+   inteiro (`@kso/cadastros`) e por componente avulso (`@kso/image-upload`). Falta migrar
+   os outros 7 módulos de cadastro e publicar o registry num domínio real.
 
 ## Perguntas em aberto
 
-- O registry privado deve hospedar só componentes de UI, ou também tentaremos empacotar
-  módulos de negócio inteiros (CRUD completo) como itens de registry?
+- ~~O registry privado deve hospedar só componentes de UI, ou também tentaremos empacotar
+  módulos de negócio inteiros (CRUD completo) como itens de registry?~~ Respondida pelo
+  piloto: também empacota módulo de negócio inteiro (`registry:block` por módulo de
+  cadastro), com o kernel compartilhado isolado num item `@kso/base` à parte. Ver
+  `docs/registry.md` para os detalhes e limitações descobertas (ex: `itens` acopla a
+  5 outros módulos por causa de tipos, `unidade-medida` depende de `lojas`).
 - Como versionar o `brand.config.ts`/tokens por cliente quando o mesmo cliente tiver
   múltiplas lojas com branding próprio (runtime) *e* um branding de base (build-time)?
 - Vale a pena automatizar o `shadcn diff` em CI para avisar quando um projeto cliente
   está desatualizado em relação ao registry interno?
+- Onde publicar o `registry.json` de fato (domínio próprio, GitHub Pages, ou dentro do
+  próprio app em `/r/*.json` já que é Next.js)? Hoje `homepage` em `registry.json` é um
+  placeholder.

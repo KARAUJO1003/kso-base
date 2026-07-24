@@ -7,7 +7,10 @@
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint",
-    "generate:module": "node scripts/generate-module.mjs"
+    "generate:module": "node scripts/generate-module.mjs",
+    "registry:manifests": "node scripts/registry/build-manifests.mjs",
+    "registry:generate": "node scripts/registry/generate-registry-json.mjs",
+    "registry:build": "npm run registry:manifests && npm run registry:generate && shadcn build"
   },
   "dependencies": {
     "@base-ui/react": "^1.5.0",
