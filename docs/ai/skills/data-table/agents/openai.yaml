@@ -1,0 +1,7 @@
+interface:
+  display_name: "kso-base Data Table"
+  short_description: "DataTable and column standards"
+  default_prompt: "Use $kso-base-data-table to build or review a kso-base table."
+
+policy:
+  allow_implicit_invocation: true

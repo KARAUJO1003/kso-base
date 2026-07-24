@@ -1,0 +1,7 @@
+interface:
+  display_name: "kso-base Architecture"
+  short_description: "Architecture rules for kso-base modules"
+  default_prompt: "Use $kso-base-architecture to review or plan a kso-base feature module."
+
+policy:
+  allow_implicit_invocation: true

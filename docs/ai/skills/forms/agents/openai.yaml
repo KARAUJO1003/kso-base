@@ -1,0 +1,7 @@
+interface:
+  display_name: "kso-base Forms"
+  short_description: "Form, sheet, and reducer standards"
+  default_prompt: "Use $kso-base-forms to build or review a kso-base form flow."
+
+policy:
+  allow_implicit_invocation: true

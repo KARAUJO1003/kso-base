@@ -1,0 +1,7 @@
+interface:
+  display_name: "kso-base Review"
+  short_description: "Clean-code and upgrade review checklist"
+  default_prompt: "Use $kso-base-review to audit kso-base code for risks and standards."
+
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,7 @@
+interface:
+  display_name: "kso-base Module Generator"
+  short_description: "Feature module scaffolding rules"
+  default_prompt: "Use $kso-base-module-generator to scaffold or update a kso-base feature module."
+
+policy:
+  allow_implicit_invocation: true

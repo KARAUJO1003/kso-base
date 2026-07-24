@@ -1,0 +1,15 @@
+/*
+ * Camada base de tokens de marca — a única camada que deve mudar por
+ * cliente/projeto (ver docs/ui-layers.md). Nomes neutros de propósito:
+ * nenhum projeto que usar este template deve precisar entender ou renomear
+ * nada em globals.css, só substituir os valores abaixo.
+ */
+:root {
+  --brand-primary: #2563eb;
+  --brand-primary-bright: #3b82f6;
+  --brand-primary-dark: #1d4ed8;
+  --brand-secondary: #1e293b;
+  --brand-ink: #0f172a;
+  --brand-paper: #f8fafc;
+  --brand-tint: #eff6ff;
+}

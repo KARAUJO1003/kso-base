@@ -1,0 +1,7 @@
+interface:
+  display_name: "kso-base Design System"
+  short_description: "Design-system and shadcn rules"
+  default_prompt: "Use $kso-base-design-system to review kso-base UI, tokens, and shadcn usage."
+
+policy:
+  allow_implicit_invocation: true
