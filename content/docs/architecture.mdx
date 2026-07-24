@@ -18,10 +18,10 @@ instalada, são código copiado para dentro do repositório
 2. **`src/components/ds/*` — composição própria.** Todo componente que
    combina primitivos do `ui/` com lógica/visual específico do produto mora
    aqui. É o único lugar onde customização de comportamento acontece.
-3. **Tokens CSS (`src/themes/brand.css` e `globals.css`) — aparência.** Toda
-   customização visual é feita trocando variável CSS, nunca editando um
-   `.tsx` de componente. `brand.css` é a única camada que muda por
-   cliente/projeto.
+3. **Tokens CSS (`src/themes/brand.css` e `src/themes/colors.css`) —
+   aparência.** Toda customização visual é feita trocando variável CSS,
+   nunca editando um `.tsx` de componente. `brand.css` é a única camada que
+   muda por cliente/projeto.
 
 <Callout variant="note">
   Atualizar um componente vendorizado significa rodar o CLI de novo por cima
@@ -34,10 +34,16 @@ instalada, são código copiado para dentro do repositório
 1. **Base** (`brand.css`) — valores crus: `--brand-primary`,
    `--brand-primary-bright`, `--brand-secondary`, `--brand-ink`,
    `--brand-paper`, `--brand-tint`. Único arquivo que muda para reskinar.
-2. **Semântica** (`globals.css`) — `--background`, `--foreground`,
-   `--primary`, `--muted`, `--accent`, `--destructive`, `--border`... Referencia
-   a camada base, não precisa de edição por cliente.
+2. **Semântica** (`colors.css`, importado por `globals.css`) —
+   `--background`, `--foreground`, `--primary`, `--muted`, `--accent`,
+   `--destructive`, `--border`... Base vem de um preset shadcn
+   (`npx shadcn@latest init --preset <id>`) — atualiza rodando o CLI de
+   novo, não editando à mão.
 3. **Componente** — tokens de variante específica, criados sob demanda.
+
+`globals.css` em si é só a cola: `@import` das duas camadas acima +
+`@theme inline` (mapeamento pro Tailwind) + reset + utilitárias de
+tipografia. Nunca tem valor de cor direto.
 
 ## Tipografia e ícones
 

@@ -20,10 +20,14 @@ Ver `docs/ui-layers.md` para o detalhe completo. Resumo:
    `--brand-primary`, `--brand-primary-bright`, `--brand-primary-dark`,
    `--brand-secondary`, `--brand-ink`, `--brand-paper`, `--brand-tint`.
    **[por cliente]** — é o único arquivo que deve mudar para reskinar.
-2. **Semântica** (`src/themes/globals.css`) — expressa intenção:
-   `--background`, `--foreground`, `--primary`, `--secondary`, `--muted`,
-   `--accent`, `--destructive`, `--border`, `--brand-default`, etc. Referencia
-   a camada base, não deveria precisar de edição por cliente.
+2. **Semântica** (`src/themes/colors.css`, importado por `globals.css`) —
+   expressa intenção: `--background`, `--foreground`, `--primary`,
+   `--secondary`, `--muted`, `--accent`, `--destructive`, `--border`,
+   `--brand-default`, etc. Referencia a camada base, não deveria precisar de
+   edição por cliente. Reset a partir do preset shadcn (`npx shadcn@latest
+   init --preset <id>`) — atualizar rodando o CLI de novo, não editando à
+   mão. `src/themes/globals.css` em si só tem o `@import` das duas camadas +
+   `@theme inline` + reset — nunca tokens de cor direto nele.
 3. **Componente** — tokens específicos de variante (ex: `--button-radius`).
    Ainda não formalizada neste template; crie sob demanda quando um
    componente precisar de override que não é só cor.
