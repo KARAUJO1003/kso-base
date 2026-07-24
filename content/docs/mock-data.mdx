@@ -27,20 +27,32 @@ export const DEMO_CONFIG = {
 
 ## `NEXT_PUBLIC_ENABLE_MOCK_API`
 
-Troca o **adapter do axios** (`src/lib/axios-instance.ts`) por um adapter
-fake (`src/lib/mock/adapter.ts`), sem tocar em nenhum hook ou componente
-acima dessa camada — `useFetch`/`useCreate`/`useUpdate`/`useDelete`
-continuam chamando `api.get`/`api.post`/... normalmente, sem saber que a
-resposta não veio de rede.
+Troca o **adapter do axios** por um adapter fake (`src/lib/mock/adapter.ts`),
+sem tocar em nenhum hook ou componente acima dessa camada —
+`useFetch`/`useCreate`/`useUpdate`/`useDelete` continuam chamando
+`api.get`/`api.post`/... normalmente, sem saber que a resposta não veio de
+rede.
+
+De propósito essa troca **não** mora dentro de `src/lib/axios-instance.ts`
+(o arquivo em si fica limpo, sem saber que o modo demo existe) — mora em
+`src/lib/mock/bootstrap.ts`, importado uma única vez (só pelo efeito
+colateral) em `src/providers/root-providers.tsx`:
 
 ```ts
+// src/lib/mock/bootstrap.ts
 if (DEMO_CONFIG.mockApi) {
-  axiosInstance.defaults.adapter = async (config) => {
-    const { mockAdapter } = await import("@/lib/mock/adapter"); // code-split
+  api.defaults.adapter = async (config) => {
+    const { mockAdapter } = await import("./adapter"); // code-split
     return mockAdapter(config);
   };
 }
 ```
+
+Isso importa: `src/lib/axios-instance.ts` é parte do kernel compartilhado
+(`@kso/base` no [registry](/docs/registry)) — um projeto cliente que
+instala `@kso/lojas` não deve ganhar `@faker-js/faker` de brinde. Mantendo a
+ligação fora dele, `src/lib/mock/` inteiro fica de fora do que é
+publicado.
 
 O adapter é um CRUD genérico: qualquer rota registrada em
 `ROUTE_TO_COLLECTION` (`src/lib/mock/db.ts`) vira `GET`/`GET :id`/`POST`/
@@ -78,14 +90,15 @@ depois de `lojas`).
 
 ## Removendo o mock e voltando a um backend real
 
-1. Apague a pasta `src/lib/mock/`.
-2. Remova o bloco `if (DEMO_CONFIG.mockApi) { ... }` de
-   `src/lib/axios-instance.ts`.
+1. Apague a pasta `src/lib/mock/` (adapter, banco fake e todas as factories).
+2. Remova a linha `import "@/lib/mock/bootstrap";` de
+   `src/providers/root-providers.tsx`.
 3. Reverta o trecho equivalente em `src/lib/auth/hooks/use-auth-user.ts` e em
    `src/middleware.ts` (ambos guardados por `if (DEMO_CONFIG.disableAuth)`).
 4. Apague `src/config/demo.config.ts` e as duas variáveis do `.env`.
 5. `npm uninstall @faker-js/faker`.
 
-Como cada mudança está isolada atrás de uma checagem de flag no início da
-função (nunca no meio da lógica de negócio), remover é reverter um `if` por
-arquivo — não precisa desfazer nada no restante do código.
+Como cada mudança está isolada atrás de uma checagem de flag (nunca no meio
+da lógica de negócio), remover é apagar um arquivo/import por vez — não
+precisa desfazer nada no restante do código, e `src/lib/axios-instance.ts`
+nunca precisa ser tocado.

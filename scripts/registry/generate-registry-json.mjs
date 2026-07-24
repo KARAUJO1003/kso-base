@@ -104,7 +104,7 @@ items.push({
 const registry = {
   $schema: "https://ui.shadcn.com/schema/registry.json",
   name: "kso",
-  homepage: "https://TODO-definir-dominio-publicado.example.com",
+  homepage: "https://kso-base.vercel.app",
   items,
 };
 

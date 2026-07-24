@@ -80,6 +80,7 @@
     "src/components/ui/multi-select.tsx",
     "src/components/ui/native-select.tsx",
     "src/config/brand.config.ts",
+    "src/config/demo.config.ts",
     "src/config/session-config.ts",
     "src/config/sidebar-menu.config.ts",
     "src/config/site-config.ts",
