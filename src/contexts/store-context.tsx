@@ -10,6 +10,7 @@ import {
   sessionCookieNames,
 } from "@/config/session-config";
 import { requestOfflineSync } from "@/lib/offline/utils";
+import { DEMO_CONFIG } from "@/config/demo.config";
 
 const QUERY_KEY = ["auth-lojas"];
 const MUTATION_KEY = ["update-user-store"];
@@ -44,7 +45,7 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
   } = useFetch<AuthStore[]>({
     route: "/auth/lojas",
     queryKey: [...QUERY_KEY, token],
-    enabled: isMounted && !!token,
+    enabled: isMounted && (!!token || DEMO_CONFIG.disableAuth),
     meta: {
       rawResponse: true,
     },

@@ -8,6 +8,7 @@ import {
 } from "@/config/session-config";
 import axios, { InternalAxiosRequestConfig } from "axios";
 import { httpErrorMessages } from "@/lib/messages";
+import { DEMO_CONFIG } from "@/config/demo.config";
 
 const publicBaseURL =
   process.env.APP_ENV === "development"
@@ -31,6 +32,21 @@ const axiosInstance = axios.create({
     Accept: "application/json",
   },
 });
+
+/**
+ * Modo demo (deploy sem backend): troca o transporte por um "banco" fake
+ * gerado com @faker-js/faker, sem tocar em nenhum hook/feature acima desta
+ * linha. Ligado por NEXT_PUBLIC_ENABLE_MOCK_API (ver src/config/demo.config.ts).
+ * Pra voltar a um backend real: apague este bloco + a pasta src/lib/mock/.
+ */
+if (DEMO_CONFIG.mockApi) {
+  let mockAdapterPromise: Promise<typeof import("@/lib/mock/adapter")> | null = null;
+  axiosInstance.defaults.adapter = async (config) => {
+    mockAdapterPromise ??= import("@/lib/mock/adapter");
+    const { mockAdapter } = await mockAdapterPromise;
+    return mockAdapter(config);
+  };
+}
 
 axiosInstance.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {

@@ -1,0 +1,70 @@
+---
+title: Visão geral de arquitetura
+description: Camadas de UI, tokens e organização de pastas.
+---
+
+# Visão geral de arquitetura
+
+## Camadas de UI
+
+Os componentes seguem o estilo shadcn/base-ui: não são uma dependência
+instalada, são código copiado para dentro do repositório
+(`components.json` configura os registries `@kso`, `@reui`, `@diceui`,
+`@bklit`).
+
+1. **`src/components/ui/*` e `src/components/reui/*` — vendored.** Saída
+   direta do CLI (`npx shadcn add ...`). Nunca editar à mão — se precisar de
+   comportamento diferente, componha por cima (camada 2).
+2. **`src/components/ds/*` — composição própria.** Todo componente que
+   combina primitivos do `ui/` com lógica/visual específico do produto mora
+   aqui. É o único lugar onde customização de comportamento acontece.
+3. **Tokens CSS (`src/themes/brand.css` e `globals.css`) — aparência.** Toda
+   customização visual é feita trocando variável CSS, nunca editando um
+   `.tsx` de componente. `brand.css` é a única camada que muda por
+   cliente/projeto.
+
+<Callout variant="note">
+  Atualizar um componente vendorizado significa rodar o CLI de novo por cima
+  do arquivo — o que sobrescreve qualquer edição manual. Por isso `ui/` e
+  `reui/` ficam intocados e toda customização vai para `ds/`.
+</Callout>
+
+## Tokens — 3 camadas
+
+1. **Base** (`brand.css`) — valores crus: `--brand-primary`,
+   `--brand-primary-bright`, `--brand-secondary`, `--brand-ink`,
+   `--brand-paper`, `--brand-tint`. Único arquivo que muda para reskinar.
+2. **Semântica** (`globals.css`) — `--background`, `--foreground`,
+   `--primary`, `--muted`, `--accent`, `--destructive`, `--border`... Referencia
+   a camada base, não precisa de edição por cliente.
+3. **Componente** — tokens de variante específica, criados sob demanda.
+
+## Tipografia e ícones
+
+Fontes: Geist (`--font-sans`) e JetBrains Mono (`--font-mono`). Classes
+utilitárias (`typography-h1`..`typography-h4`, `typography-body`,
+`typography-muted`...) em vez de `text-*`/`font-*` soltos.
+
+`@tabler/icons-react` para módulos/sidebar, `lucide-react` para UI genérica —
+não misture as duas no mesmo componente sem motivo.
+
+## Layout de página
+
+- `PageContainer` / `PageHeader` / `PageTitle` / `PageDescription` /
+  `PageContent` (`src/components/layout/page-container.tsx`) — contêiner
+  padrão de toda página de módulo.
+- Sidebar fica no `layout.tsx` da rota, nunca dentro do conteúdo da feature.
+
+## Estrutura de pastas
+
+```
+src/
+  app/(root)/(cadastros)/<modulo>/page.tsx   # rota + AuthGuard
+  features/(cadastros)/<modulo>/             # feature.tsx, components/, utils/
+  types/<modulo>/types.ts                    # shape da entidade
+  modules/registry.ts                        # sidebar + flag + permissão, 1 lugar só
+  lib/auth/                                  # AuthGuard, Can, permissões
+  lib/feature-flags/                         # flags.config.ts
+  lib/mock/                                  # banco fake (modo demo) — ver Dados fake
+  components/{ui,reui,ds}/                   # camadas de UI
+```

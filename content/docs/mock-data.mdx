@@ -1,0 +1,91 @@
+---
+title: Dados fake (Faker)
+description: Como o modo demo funciona e como trocar por um backend real.
+---
+
+# Dados fake (Faker)
+
+O template pode rodar **sem nenhum backend**, com dados gerados por
+[`@faker-js/faker`](https://fakerjs.dev) — é assim que este site (`/docs`,
+`/changelog` e o app em si) fica navegável publicado numa Vercel sem
+servidor próprio. Duas flags controlam tudo, em um único arquivo central:
+
+```ts
+// src/config/demo.config.ts
+export const DEMO_CONFIG = {
+  mockApi: readBooleanFlag(process.env.NEXT_PUBLIC_ENABLE_MOCK_API),
+  disableAuth: readBooleanFlag(process.env.NEXT_PUBLIC_DISABLE_AUTH),
+};
+```
+
+<Callout variant="warning" title="Só para demo/preview">
+  Essas duas flags existem para publicar uma prévia navegável sem backend.
+  Um projeto cliente com dados reais deve manter as duas `false` — o mock
+  não faz nenhuma validação de negócio real, e desligar a auth remove
+  qualquer proteção de rota.
+</Callout>
+
+## `NEXT_PUBLIC_ENABLE_MOCK_API`
+
+Troca o **adapter do axios** (`src/lib/axios-instance.ts`) por um adapter
+fake (`src/lib/mock/adapter.ts`), sem tocar em nenhum hook ou componente
+acima dessa camada — `useFetch`/`useCreate`/`useUpdate`/`useDelete`
+continuam chamando `api.get`/`api.post`/... normalmente, sem saber que a
+resposta não veio de rede.
+
+```ts
+if (DEMO_CONFIG.mockApi) {
+  axiosInstance.defaults.adapter = async (config) => {
+    const { mockAdapter } = await import("@/lib/mock/adapter"); // code-split
+    return mockAdapter(config);
+  };
+}
+```
+
+O adapter é um CRUD genérico: qualquer rota registrada em
+`ROUTE_TO_COLLECTION` (`src/lib/mock/db.ts`) vira `GET`/`GET :id`/`POST`/
+`PUT`/`DELETE` completos contra uma coleção fake. As 22 entidades do sistema
+(todos os módulos de cadastro + usuários/papéis/permissões/sistemas) são
+seedadas uma vez, respeitando referência entre entidades de verdade (ex:
+`colaborador.gerencia` aponta para uma gerência que existe de fato na
+coleção `gerencias`), e persistidas em `localStorage` para sobreviver a um
+refresh — cada visitante do demo tem seu próprio "banco".
+
+## `NEXT_PUBLIC_DISABLE_AUTH`
+
+Pula o fluxo de login inteiro:
+
+- `src/middleware.ts` para de checar sessão/redirecionar para `/login`.
+- `useAuthUser` (`src/lib/auth/hooks/use-auth-user.ts`) retorna um usuário
+  sintético (`isAdmin: true`) sem chamar `/auth/me`.
+
+`AuthGuard` e `Can` não mudam nada — eles continuam checando `user` e
+`isAdmin` do jeito que sempre checaram; só a fonte desses dados muda.
+
+## Estendendo para um módulo novo
+
+```ts
+// src/lib/mock/factories/<dominio>.ts
+export function createMeuModulo(index: number): IMeuModulo {
+  return { _id: fakeId(), nome: faker.commerce.productName(), ...fakeTimestamps() };
+}
+```
+
+Registre a coleção em `ROUTE_TO_COLLECTION` e chame a factory em
+`seedDatabase()` (`src/lib/mock/db.ts`), na ordem certa se o módulo
+referenciar outro (ex: um módulo que referencia `lojas` deve ser seedado
+depois de `lojas`).
+
+## Removendo o mock e voltando a um backend real
+
+1. Apague a pasta `src/lib/mock/`.
+2. Remova o bloco `if (DEMO_CONFIG.mockApi) { ... }` de
+   `src/lib/axios-instance.ts`.
+3. Reverta o trecho equivalente em `src/lib/auth/hooks/use-auth-user.ts` e em
+   `src/middleware.ts` (ambos guardados por `if (DEMO_CONFIG.disableAuth)`).
+4. Apague `src/config/demo.config.ts` e as duas variáveis do `.env`.
+5. `npm uninstall @faker-js/faker`.
+
+Como cada mudança está isolada atrás de uma checagem de flag no início da
+função (nunca no meio da lógica de negócio), remover é reverter um `if` por
+arquivo — não precisa desfazer nada no restante do código.

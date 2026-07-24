@@ -1,0 +1,58 @@
+---
+title: Forms & DataTable
+description: Padrões de formulário e tabela usados em todos os módulos.
+---
+
+# Forms & DataTable
+
+## Formulários
+
+- `react-hook-form` + `zod` para validação, sempre dentro de `FormProvider`.
+- `FormFields` (`src/components/shared/form-fields.tsx`) para campos
+  tipados — inclui `Input`, `ComboboxSelect`, `ComboboxAsync`, `ImageUpload`,
+  entre outros.
+- `Field` / `FieldGroup` / `FieldSet` / `FieldLegend` do shadcn para
+  estrutura visual.
+- `useCreate` / `useUpdate` / `useDelete` (`src/hooks/use-crud.ts`) para as
+  mutações padrão — todo módulo usa os mesmos hooks, nunca `axios` direto.
+- `useLoadOptions` para opções assíncronas (combobox que busca em outra
+  rota) em vez de duplicar lógica de busca.
+
+```tsx
+const onCreate = useCreate<FormData>({
+  mutationKey: [MUTATION_KEYS_LOJA.CREATE],
+  route: MODULE_ROUTE,
+  queryInvalidationKeys: [QUERIES_KEYS_LOJA.LIST],
+});
+```
+
+**Estado:** `useState` para uma flag independente; `useReducer` para fluxos
+de modal/formulário relacionados. Evite correntes de `watch`/`setValue`
+quando `useFieldArray` ou valor computado resolvem.
+
+## DataTable
+
+- `DataTable` (`src/components/extensions/datatable/datatable.tsx`) é a
+  tabela padrão de todo módulo.
+- `createColumnBuilder<TData>()` para colunas novas, com
+  `DataTableColumnHeader` para cabeçalhos ordenáveis.
+- Colunas ficam em `components/table-columns.tsx`; a composição
+  (`DataTable` + toolbar) em `components/table.tsx`.
+- Texto buscável usa `Highlight` (`components/extensions/search-highlight.tsx`)
+  para destacar o termo pesquisado.
+
+```tsx
+<DataTable
+  data={data}
+  columns={columns()}
+  isPending={isPending}
+  toolbar={
+    <Can can={[PERMISSIONS.create]}>
+      <Button onClick={() => modal.onOpen()}>Adicionar</Button>
+    </Can>
+  }
+/>
+```
+
+Ações de linha (editar/excluir) ficam pequenas e delegam a abertura de modal
+para os hooks de modal — evite lógica de negócio grande dentro de uma célula.

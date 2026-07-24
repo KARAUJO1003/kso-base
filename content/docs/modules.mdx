@@ -1,0 +1,65 @@
+---
+title: Módulos
+description: Como um módulo de cadastro é montado e registrado.
+---
+
+# Módulos
+
+Um módulo de cadastro (`lojas`, `itens`, `colaboradores`...) segue sempre a
+mesma forma:
+
+```
+src/features/(cadastros)/<modulo>/
+  feature.tsx              # composição da página (título + tabela + modal)
+  components/
+    table.tsx               # DataTable + botão "Adicionar"
+    table-columns.tsx        # definição das colunas
+    form-<modulo>.tsx        # Sheet + formulário (zod + react-hook-form)
+    editar-<modulo>-modal.tsx
+    excluir-<modulo>-modal.tsx
+  utils/
+    constants.ts             # chaves de modal/query/mutation
+    module-utils.ts          # MODULE_ROUTE, PERMISSIONS, MODULE_CONFIG
+```
+
+## A fonte única de verdade: `src/modules/registry.ts`
+
+Sidebar, feature flag e permissão de cada módulo saem todos de uma única
+entrada:
+
+```ts
+{
+  key: "lojas",
+  label: "Lojas",
+  route: "/lojas",
+  icon: IconBuildingStore,
+  category: "organizacao",
+  permissionBase: "lojas",
+  featureFlag: "modules.organizacao.lojas.visualizar",
+  defaultEnabled: true,
+}
+```
+
+Para desligar um módulo por cliente/projeto **sem tocar código**, liste a
+`key` em `NEXT_PUBLIC_DISABLED_MODULES` (`.env`), separada por vírgula.
+
+## Criando um módulo novo
+
+```bash
+npm run generate:module
+```
+
+O gerador cria o esqueleto de pastas acima. Depois:
+
+1. Ajuste `types/<modulo>/types.ts` com o shape real da entidade.
+2. Registre a entrada em `src/modules/registry.ts` (o gerador não faz isso
+   automaticamente).
+3. Se o módulo precisa aparecer no [modo demo](/docs/mock-data), adicione uma
+   factory em `src/lib/mock/factories/` e a rota em `ROUTE_TO_COLLECTION`
+   (`src/lib/mock/db.ts`).
+
+## O que não entra aqui
+
+Regra de negócio de domínio específico (reservas de quarto, prontuário
+médico, comandas de bar) não deve virar módulo do template — nasce no
+projeto derivado, seguindo o mesmo padrão acima.

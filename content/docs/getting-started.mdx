@@ -1,0 +1,44 @@
+---
+title: Instalação
+description: Rodando o kso-base localmente.
+---
+
+# Instalação
+
+```bash
+npm install
+cp .env.example .env.local
+npm run dev
+```
+
+Abra `http://localhost:3000`.
+
+## Configurando para um cliente/projeto novo
+
+1. **Branding** — preencha `NEXT_PUBLIC_BRAND_*` em `.env.local`. Não edite
+   `src/config/brand.config.ts` nem `site-config.ts` diretamente.
+2. **Cores/tema** — edite só `src/themes/brand.css` (ver
+   [Forms & DataTable](/docs/forms-and-tables) e a seção de tokens abaixo).
+3. **API real** — preencha `NEXT_PUBLIC_DEV_API_BASE_URL` /
+   `NEXT_PUBLIC_PROD_API_BASE_URL`. Enquanto isso não existir, use o
+   [modo demo](/docs/mock-data) para navegar com dados fake.
+4. **Módulos que o cliente não usa** — liste as `key`s em
+   `NEXT_PUBLIC_DISABLED_MODULES` (ex: `motivos-trocas,tabelas-precos`).
+5. **Módulo novo específico do cliente** — `npm run generate:module` e depois
+   registre a entrada em `src/modules/registry.ts` manualmente.
+
+## Variáveis de ambiente relevantes
+
+| Variável | Para que serve |
+| --- | --- |
+| `NEXT_PUBLIC_DEV_API_BASE_URL` / `NEXT_PUBLIC_PROD_API_BASE_URL` | Backend real |
+| `NEXT_PUBLIC_DISABLED_MODULES` | Desligar módulos por cliente |
+| `NEXT_PUBLIC_ENABLE_MOCK_API` | Modo demo — dados fake (ver [Dados fake](/docs/mock-data)) |
+| `NEXT_PUBLIC_DISABLE_AUTH` | Modo demo — pula login (ver [Dados fake](/docs/mock-data)) |
+| `NEXT_PUBLIC_BRAND_*` | Nome, título, descrição, redes sociais |
+
+<Callout variant="warning" title="Nunca ligue as flags de demo em produção com dados reais">
+  `NEXT_PUBLIC_ENABLE_MOCK_API` e `NEXT_PUBLIC_DISABLE_AUTH` existem só para
+  publicar uma prévia navegável sem backend (ex: Vercel). Um projeto cliente
+  real deve manter as duas como `false`.
+</Callout>

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSession, getTokenPayload } from "./lib/session/server";
+import { DEMO_CONFIG } from "./config/demo.config";
 
 export const config = {
   matcher: ["/((?!.*\\.).*)"],
@@ -19,10 +20,16 @@ export default async function middleware(request: NextRequest) {
 
   const url = request.nextUrl.pathname;
 
+  if (DEMO_CONFIG.disableAuth) {
+    return NextResponse.next();
+  }
+
   if (
     url.startsWith("/api") ||
     url.startsWith("/_next/static") ||
     url.startsWith("/_next/image") ||
+    url.startsWith("/docs") ||
+    url.startsWith("/changelog") ||
     url === "/favicon.ico" ||
     url === "/sitemap.xml" ||
     url === "/robots.txt" ||

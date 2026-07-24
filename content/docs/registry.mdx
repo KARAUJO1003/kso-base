@@ -1,0 +1,59 @@
+---
+title: Registry (@kso)
+description: Instalar módulos ou componentes deste template em outro projeto, seletivamente.
+---
+
+# Registry privado (`@kso`)
+
+Registry [shadcn](https://ui.shadcn.com/docs/registry) próprio para reuso
+seletivo de código entre projetos que descendem deste template — sem clonar
+o repo inteiro.
+
+```bash
+npx shadcn add @kso/lojas       # só o módulo Lojas
+npx shadcn add @kso/cadastros   # todos os módulos de cadastro publicados
+npx shadcn add @kso/image-upload # só um componente avulso
+```
+
+## Como está organizado
+
+- **`@kso/base`** — o kernel compartilhado (hooks, contexts, `DataTable`,
+  `FormFields`, permissões, feature flags). Todo módulo de negócio depende
+  dele.
+- **Um item por módulo** (`registry:block`) — só os arquivos daquele módulo,
+  mais `registryDependencies` para `@kso/base` e para outros módulos que ele
+  referencia de verdade.
+- **`@kso/cadastros`** — item guarda-chuva, instala de uma vez todos os
+  módulos já publicados.
+- **`@kso/image-upload`** — exemplo de componente 100% standalone, instalável
+  em qualquer projeto (nem precisa ser descendente do kso-base).
+
+O grafo de dependência entre módulos foi **descoberto automaticamente**
+traçando o import real do código (`scripts/registry/trace-imports.mjs` →
+`classify.mjs` → `direct-cross-refs.mjs`), não assumido — isso pegou
+acoplamentos reais que não estavam documentados em lugar nenhum (ex:
+`itens` depende de 5 outros módulos via tipos; `unidade-medida` depende de
+`lojas`).
+
+## Publicando / atualizando
+
+```bash
+npm run registry:build   # manifests -> registry.json -> shadcn build -> public/r/*.json
+```
+
+`public/r/*.json` fica fora do git (gerado) e, como este projeto já é uma
+app Next.js, é servido estaticamente em `/r/<nome>.json` depois de um
+deploy.
+
+## Migrando um módulo novo para o registry
+
+1. Adicione o slug em `MODULES` (`scripts/registry/build-manifests.mjs`).
+2. Adicione `{ title, description }` em `PILOT_MODULES`
+   (`scripts/registry/generate-registry-json.mjs`).
+3. `npm run registry:build`.
+
+<Callout variant="note">
+  Hoje só 6 dos 17 módulos de cadastro estão publicados (piloto). O processo
+  acima é mecânico — detalhes e limitações conhecidas em
+  `docs/registry.md` no repositório.
+</Callout>

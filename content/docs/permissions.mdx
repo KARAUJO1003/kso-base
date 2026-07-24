@@ -1,0 +1,71 @@
+---
+title: Auth & permissões
+description: AuthGuard, Can, feature flags e como o modo demo desliga tudo isso.
+---
+
+# Auth & permissões
+
+## AuthGuard
+
+Protege uma rota inteira por permissão:
+
+```tsx
+export default function Page() {
+  return (
+    <AuthGuard can={[PERMISSIONS.view]} groupSlug={MODULE_CONFIG.moduleSlug}>
+      <LojaFeature />
+    </AuthGuard>
+  );
+}
+```
+
+- Sem usuário → `unauthorized()` (401), exceto com `fallback`.
+- Sem permissão → `forbidden()` (403), exceto com `fallback`.
+- `groupSlug` permite usar permissões curtas (`"criar"`) em vez do caminho
+  completo (`"lojas:criar"`).
+
+## Can
+
+Protege um pedaço de UI (dentro de um `AuthGuard` pai, herda o `groupSlug`):
+
+```tsx
+<Can can={[PERMISSIONS.create]}>
+  <Button onClick={() => modal.onOpen()}>Adicionar</Button>
+</Can>
+```
+
+`isAdmin: true` no usuário autenticado libera qualquer verificação de
+`can`/`canAny`/`canAll` — é assim que o [modo demo](/docs/mock-data)
+consegue mostrar todos os botões sem simular abilities por módulo.
+
+## Feature flags
+
+`src/lib/feature-flags/flags.config.ts` controla granularmente
+criar/editar/visualizar/excluir por módulo — separado da flag
+`NEXT_PUBLIC_DISABLED_MODULES`, que desliga o módulo inteiro (rota + sidebar
++ permissão) via `src/modules/registry.ts`.
+
+```ts
+modules: {
+  organizacao: {
+    lojas: BASE_FLAGS, // { criar, editar, visualizar, excluir }
+  },
+}
+```
+
+`isEnabled("modules.organizacao.lojas.visualizar")` faz a leitura.
+
+## Sessão
+
+Cookies (JWT) + `src/middleware.ts` protegem toda rota que não esteja em
+`publicRoutes` (`/login`, `/unauthorized`, e `/docs`/`/changelog`, que são
+sempre públicas). O axios (`src/lib/axios-instance.ts`) faz refresh
+automático de token em respostas 401.
+
+<Callout variant="note" title="NEXT_PUBLIC_DISABLE_AUTH">
+  Com a flag ligada, `src/middleware.ts` pula a checagem de sessão inteira e
+  `useAuthUser` retorna um usuário admin sintético sem chamar `/auth/me`.
+  Zero mudança no `AuthGuard`/`Can` — eles continuam funcionando do jeito que
+  já funcionavam, só que a fonte da verdade sobre "quem é o usuário" muda.
+  Detalhes em [Dados fake (Faker)](/docs/mock-data).
+</Callout>
