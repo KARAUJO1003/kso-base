@@ -1,0 +1,52 @@
+---
+title: Introdução
+description: O que é o kso-base e para que serve.
+---
+
+# kso-base
+
+Template Next.js (App Router) para sistemas administrativos internos:
+autenticação, controle de usuários/papéis/permissões e um conjunto de
+módulos de cadastro genéricos — organização (lojas, colaboradores,
+fornecedores...) e inventário/financeiro (itens, depósitos, tabelas de
+preço...) — prontos para ligar/desligar por cliente.
+
+Não contém nenhuma regra de negócio de um domínio específico (hotelaria,
+varejo, saúde). Isso nasce no projeto derivado, seguindo o mesmo padrão de
+módulo descrito aqui.
+
+<Callout variant="tip" title="Este site está rodando em modo demo">
+  Sem backend real: os dados vêm de um "banco" fake gerado com
+  [Faker](https://fakerjs.dev) e a autenticação está desligada. Veja
+  [Dados fake (Faker)](/docs/mock-data) para entender o mecanismo e como
+  trocar por uma API real no seu projeto.
+</Callout>
+
+## Stack
+
+- Next.js 15 (App Router) + React 19 + TypeScript
+- Tailwind CSS v4 + componentes estilo shadcn/base-ui (`@base-ui/react`)
+- TanStack Query + TanStack Table
+- react-hook-form + zod
+- Axios para HTTP, sessão via cookies (JWT) + middleware
+
+## Módulos incluídos
+
+**Núcleo administrativo** — Usuários, Papéis, Permissões, Módulos (grupos de
+permissão), Sistemas.
+
+**Organização** — Lojas, Grupo de Lojas, Setores, Gerências, Cargos,
+Colaboradores, Pessoas, Fornecedores.
+
+**Inventário/financeiro** — Unidade de Medida, Grupos de Itens, Sub Grupos de
+Itens, Itens, Depósitos, Tabelas de Preço, Centro de Custos, Formas de
+Pagamento, Motivos de Trocas.
+
+Cada módulo tem uma única entrada em `src/modules/registry.ts` — é ali que se
+liga/desliga um módulo, não no código da feature. Veja [Módulos](/docs/modules).
+
+## Por onde começar
+
+1. [Instalação](/docs/getting-started) — rodar localmente.
+2. [Visão geral de arquitetura](/docs/architecture) — como o projeto se organiza.
+3. [Registry (@kso)](/docs/registry) — reaproveitar módulos entre projetos.

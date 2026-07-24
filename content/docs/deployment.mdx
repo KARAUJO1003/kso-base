@@ -1,0 +1,42 @@
+---
+title: Deploy na Vercel
+description: Publicar uma prévia navegável sem backend.
+---
+
+# Deploy na Vercel
+
+## Prévia sem backend (demo)
+
+1. Importe o repositório na Vercel.
+2. Defina as env vars do projeto:
+
+```bash
+NEXT_PUBLIC_ENABLE_MOCK_API=true
+NEXT_PUBLIC_DISABLE_AUTH=true
+```
+
+3. Deploy. Não precisa de `NEXT_PUBLIC_*_API_BASE_URL` nem de banco de dados
+   — ver [Dados fake (Faker)](/docs/mock-data) para o que essas duas flags
+   fazem.
+
+`/docs` e `/changelog` são públicos e funcionam independente das flags
+acima (não passam pelo `AuthGuard`/`middleware` de sessão).
+
+## Deploy com backend real
+
+Defina `NEXT_PUBLIC_DEV_API_BASE_URL`/`NEXT_PUBLIC_PROD_API_BASE_URL`
+apontando para a API real e **mantenha as duas flags de demo como
+`false`** (ou simplesmente não as defina — o padrão já é `false`).
+
+<Callout variant="warning">
+  As flags de demo não têm nenhuma validação de negócio real e desligam a
+  autenticação. Nunca as ligue num ambiente com dados de cliente de
+  verdade.
+</Callout>
+
+## Build local
+
+```bash
+npm run build
+npm run start
+```
