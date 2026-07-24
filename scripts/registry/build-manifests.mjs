@@ -34,6 +34,16 @@ const ROUTE_SLUG_ALIASES = {
   "unidade-medida": "unidades-medidas",
 };
 
+// Layout raiz + layout de (root): não pertencem a nenhum módulo (nada em
+// (cadastros) os importa — são "donos" das páginas via convenção de pastas
+// do Next.js, não import direto), então o trace por módulo nunca os
+// alcança sozinho. Sem eles, @kso/base te dá os hooks/contexts mas não a
+// montagem de providers (QueryClientProvider, ModalProvider, StoreProvider,
+// AuthProvider...) — instalar um módulo funciona, mas quebra em runtime com
+// "No QueryClient set" até alguém descobrir e montar isso manualmente. Ver
+// content/docs/registry.mdx.
+const SHELL_ENTRIES = ["src/app/layout.tsx", "src/app/(root)/layout.tsx"];
+
 function run(script, args, input) {
   return execFileSync("node", [join(SCRIPTS_DIR, script), ...args], {
     cwd: ROOT,
@@ -68,9 +78,26 @@ for (const slug of MODULES) {
   console.log(`[ok] ${slug}: own=${classifiedByModule[slug].own.length} base=${classifiedByModule[slug].base.length}`);
 }
 
-// base-union.json: união de base/stockUi/vendoredExternal/npmPackages entre todos os módulos.
+// Trace do "shell" do app (layouts raiz), sem dono de módulo — tudo cai em
+// base/stockUi/vendoredExternal via classify.mjs com um slug que não bate
+// com nenhuma feature de verdade.
+const shellTraceOut = run("trace-imports.mjs", SHELL_ENTRIES);
+writeFileSync(join(MANIFEST_DIR, "trace-app-shell.json"), shellTraceOut);
+const shellClassifyOut = run("classify.mjs", ["app-shell"], shellTraceOut);
+writeFileSync(join(MANIFEST_DIR, "classified-app-shell.json"), shellClassifyOut);
+const shellClassified = JSON.parse(shellClassifyOut);
+// NÃO embarca os layout.tsx em si: quase todo projeto de destino já tem um
+// (é obrigatório pro App Router funcionar), então o shadcn CLI pula por
+// já existir (comportamento padrão, não sobrescreve) — embarcar serviria de
+// pouco e arrisca sobrescrever por engano num projeto sem layout ainda.
+// A montagem (RootProviders/ProtectedProviders) precisa ser feita à mão no
+// layout de quem instala — ver content/docs/registry.mdx.
+shellClassified.base = shellClassified.base.filter((f) => !SHELL_ENTRIES.includes(f));
+console.log(`[ok] app-shell: base=${shellClassified.base.length}`);
+
+// base-union.json: união de base/stockUi/vendoredExternal/npmPackages entre todos os módulos + o shell.
 const baseSet = new Set(), stockUiSet = new Set(), vendoredSet = new Set(), npmSet = new Set();
-for (const d of Object.values(classifiedByModule)) {
+for (const d of [...Object.values(classifiedByModule), shellClassified]) {
   d.base.forEach((f) => baseSet.add(f));
   d.stockUi.forEach((f) => stockUiSet.add(f));
   d.vendoredExternal.forEach((f) => vendoredSet.add(f));

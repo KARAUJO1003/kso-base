@@ -10,6 +10,11 @@
       "description": "Hooks (use-crud, use-modal-instance), contexts/providers (store, modal, auth), camada de permissões e feature flags, DataTable, FormFields e demais componentes ui/ próprios (combobox, image-upload, multi-select, native-select). Pré-requisito de todos os módulos de negócio deste registry.",
       "files": [
         {
+          "path": "src/components/ds/brand-logo.tsx",
+          "type": "registry:component",
+          "target": "~/src/components/ds/brand-logo.tsx"
+        },
+        {
           "path": "src/components/extensions/datatable/datatable-columns-toggle.tsx",
           "type": "registry:component",
           "target": "~/src/components/extensions/datatable/datatable-columns-toggle.tsx"
@@ -45,9 +50,24 @@
           "target": "~/src/components/extensions/search-highlight.tsx"
         },
         {
+          "path": "src/components/layout/featured-icon.tsx",
+          "type": "registry:component",
+          "target": "~/src/components/layout/featured-icon.tsx"
+        },
+        {
           "path": "src/components/layout/page-container.tsx",
           "type": "registry:component",
           "target": "~/src/components/layout/page-container.tsx"
+        },
+        {
+          "path": "src/components/layout/root-layout-content.tsx",
+          "type": "registry:component",
+          "target": "~/src/components/layout/root-layout-content.tsx"
+        },
+        {
+          "path": "src/components/progress-bar.tsx",
+          "type": "registry:component",
+          "target": "~/src/components/progress-bar.tsx"
         },
         {
           "path": "src/components/shared/form-fields.tsx",
@@ -58,6 +78,36 @@
           "path": "src/components/shared/import-spreadsheet-button.tsx",
           "type": "registry:component",
           "target": "~/src/components/shared/import-spreadsheet-button.tsx"
+        },
+        {
+          "path": "src/components/sidebar/app-sidebar.tsx",
+          "type": "registry:component",
+          "target": "~/src/components/sidebar/app-sidebar.tsx"
+        },
+        {
+          "path": "src/components/sidebar/nav-main.tsx",
+          "type": "registry:component",
+          "target": "~/src/components/sidebar/nav-main.tsx"
+        },
+        {
+          "path": "src/components/sidebar/nav-user.tsx",
+          "type": "registry:component",
+          "target": "~/src/components/sidebar/nav-user.tsx"
+        },
+        {
+          "path": "src/components/sidebar/store-switcher.tsx",
+          "type": "registry:component",
+          "target": "~/src/components/sidebar/store-switcher.tsx"
+        },
+        {
+          "path": "src/components/site-header.tsx",
+          "type": "registry:component",
+          "target": "~/src/components/site-header.tsx"
+        },
+        {
+          "path": "src/components/toggle-theme/index.tsx",
+          "type": "registry:component",
+          "target": "~/src/components/toggle-theme/index.tsx"
         },
         {
           "path": "src/components/ui/combobox-async.tsx",
@@ -115,6 +165,26 @@
           "target": "~/src/config/site-config.ts"
         },
         {
+          "path": "src/contexts/abilities.tsx",
+          "type": "registry:lib",
+          "target": "~/src/contexts/abilities.tsx"
+        },
+        {
+          "path": "src/contexts/auth-context.tsx",
+          "type": "registry:lib",
+          "target": "~/src/contexts/auth-context.tsx"
+        },
+        {
+          "path": "src/contexts/header-context.tsx",
+          "type": "registry:lib",
+          "target": "~/src/contexts/header-context.tsx"
+        },
+        {
+          "path": "src/contexts/progress-bar-context.tsx",
+          "type": "registry:lib",
+          "target": "~/src/contexts/progress-bar-context.tsx"
+        },
+        {
           "path": "src/contexts/store-context.tsx",
           "type": "registry:lib",
           "target": "~/src/contexts/store-context.tsx"
@@ -135,6 +205,11 @@
           "target": "~/src/hooks/use-debounce.ts"
         },
         {
+          "path": "src/hooks/use-filtered-sidebar-items.ts",
+          "type": "registry:hook",
+          "target": "~/src/hooks/use-filtered-sidebar-items.ts"
+        },
+        {
           "path": "src/hooks/use-isomorphic-layout-effect.ts",
           "type": "registry:hook",
           "target": "~/src/hooks/use-isomorphic-layout-effect.ts"
@@ -148,6 +223,11 @@
           "path": "src/hooks/use-load-options.ts",
           "type": "registry:hook",
           "target": "~/src/hooks/use-load-options.ts"
+        },
+        {
+          "path": "src/hooks/use-mobile.ts",
+          "type": "registry:hook",
+          "target": "~/src/hooks/use-mobile.ts"
         },
         {
           "path": "src/hooks/use-modal-instance.ts",
@@ -285,6 +365,16 @@
           "target": "~/src/lib/session/utils.ts"
         },
         {
+          "path": "src/lib/store-branding-style.ts",
+          "type": "registry:lib",
+          "target": "~/src/lib/store-branding-style.ts"
+        },
+        {
+          "path": "src/lib/store-branding.ts",
+          "type": "registry:lib",
+          "target": "~/src/lib/store-branding.ts"
+        },
+        {
           "path": "src/lib/utils.ts",
           "type": "registry:lib",
           "target": "~/src/lib/utils.ts"
@@ -298,6 +388,36 @@
           "path": "src/providers/modal-provider.tsx",
           "type": "registry:lib",
           "target": "~/src/providers/modal-provider.tsx"
+        },
+        {
+          "path": "src/providers/protected-providers.tsx",
+          "type": "registry:lib",
+          "target": "~/src/providers/protected-providers.tsx"
+        },
+        {
+          "path": "src/providers/root-providers.tsx",
+          "type": "registry:lib",
+          "target": "~/src/providers/root-providers.tsx"
+        },
+        {
+          "path": "src/providers/socket-error.ts",
+          "type": "registry:lib",
+          "target": "~/src/providers/socket-error.ts"
+        },
+        {
+          "path": "src/providers/socket-provider.tsx",
+          "type": "registry:lib",
+          "target": "~/src/providers/socket-provider.tsx"
+        },
+        {
+          "path": "src/providers/store-brand-provider.tsx",
+          "type": "registry:lib",
+          "target": "~/src/providers/store-brand-provider.tsx"
+        },
+        {
+          "path": "src/providers/theme-provider.tsx",
+          "type": "registry:lib",
+          "target": "~/src/providers/theme-provider.tsx"
         },
         {
           "path": "src/types/store-branding.ts",
@@ -315,8 +435,11 @@
         "aspect-ratio",
         "avatar",
         "badge",
+        "breadcrumb",
         "button",
+        "button-group",
         "checkbox",
+        "collapsible",
         "command",
         "dialog",
         "dropdown-menu",
@@ -330,6 +453,7 @@
         "select",
         "separator",
         "sheet",
+        "sidebar",
         "skeleton",
         "slider",
         "spinner",
@@ -338,6 +462,7 @@
         "textarea",
         "toggle",
         "toggle-group",
+        "tooltip",
         "@reui/autocomplete",
         "@reui/number-field"
       ],
@@ -347,6 +472,7 @@
         "@radix-ui/react-icons",
         "@tabler/icons-react",
         "@tanstack/react-query",
+        "@tanstack/react-query-devtools",
         "@tanstack/react-table",
         "axios",
         "class-variance-authority",
@@ -359,9 +485,11 @@
         "lucide-react",
         "motion",
         "next",
+        "next-themes",
         "nookies",
         "react",
         "react-hook-form",
+        "socket.io-client",
         "sonner",
         "tailwind-merge",
         "xlsx",

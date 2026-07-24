@@ -28,11 +28,49 @@ npx shadcn add @kso/image-upload # só um componente avulso
   `target` dos arquivos manualmente depois de baixar, ou peça ajuda.
 </Callout>
 
+## Depois de instalar: monte os providers no layout raiz
+
+`@kso/base` já inclui `src/providers/root-providers.tsx` e
+`protected-providers.tsx` (React Query, tema, modal, auth, store), mas só
+**cria os arquivos** — não consegue editar o `layout.tsx` do seu projeto
+por você (o shadcn CLI nunca sobrescreve um arquivo que já existe, por
+segurança). Sem isso, qualquer página que use um hook do kernel (`AuthGuard`,
+`useCrud`, `useModalInstance`...) quebra em runtime com erro tipo
+`No QueryClient set, use QueryClientProvider to set one`.
+
+Envolva o `children` do seu layout raiz (`app/layout.tsx`) com a pilha de
+providers:
+
+```tsx
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ThemeProvider } from "next-themes";
+import { ModalProvider } from "@/providers/modal-provider";
+import { StoreProvider } from "@/contexts/store-context";
+import { AuthProvider } from "@/lib/auth/providers/auth-provider";
+
+const queryClient = new QueryClient();
+
+// dentro do <body>, envolvendo children:
+<QueryClientProvider client={queryClient}>
+  <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+    <StoreProvider>
+      <AuthProvider>
+        <ModalProvider>{children}</ModalProvider>
+      </AuthProvider>
+    </StoreProvider>
+  </ThemeProvider>
+</QueryClientProvider>
+```
+
+Ou use `<RootProviders>`/`<ProtectedProviders>` (já instalados) direto, se
+preferir a composição completa do template (inclui socket, progress bar,
+toaster etc. — ver `src/providers/root-providers.tsx`).
+
 ## Como está organizado
 
-- **`@kso/base`** — o kernel compartilhado (hooks, contexts, `DataTable`,
-  `FormFields`, permissões, feature flags). Todo módulo de negócio depende
-  dele.
+- **`@kso/base`** — o kernel compartilhado (hooks, contexts, providers,
+  `DataTable`, `FormFields`, permissões, feature flags). Todo módulo de
+  negócio depende dele.
 - **Um item por módulo** (`registry:block`) — só os arquivos daquele módulo,
   mais `registryDependencies` para `@kso/base` e para outros módulos que ele
   referencia de verdade.

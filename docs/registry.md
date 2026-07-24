@@ -29,10 +29,33 @@ sobrescreve o arquivo local (sem merge de 3 vias).
 > Recuperação, se acontecer: a `src/` criada é inteiramente nova/untracked,
 > então `git status` confirma e apagar a pasta desfaz sem perda.
 
+## Pós-instalação: providers do layout raiz precisam ser montados à mão
+
+`@kso/base` inclui `root-providers.tsx`/`protected-providers.tsx` (mais
+`app-sidebar.tsx`, `root-layout-content.tsx` etc. — o "shell" do app), mas
+essa era uma lacuna real: `src/app/layout.tsx` e `src/app/(root)/layout.tsx`
+não são importados por nenhuma feature/página de módulo, então o trace
+automático nunca os alcançava, e nenhum arquivo de provider era publicado.
+Corrigido adicionando esses dois layouts como entry points extras no
+`build-manifests.mjs` (função `SHELL_ENTRIES`), só pra descobrir os
+arquivos que eles puxam — os `layout.tsx` em si **não** são publicados
+(instalar por cima de um layout.tsx que quase certamente já existe no
+projeto de destino seria arriscado; o shadcn CLI já pula por padrão se o
+arquivo existir, então publicá-los serviria de pouco mesmo).
+
+Mesmo com os arquivos instalados, quem instala um módulo ainda precisa
+envolver o `children` do próprio `layout.tsx` com
+`QueryClientProvider`/`ThemeProvider`/`StoreProvider`/`AuthProvider`/`ModalProvider`
+(ou usar `<RootProviders>`/`<ProtectedProviders>` prontos) — isso não dá pra
+automatizar (o CLI não edita arquivo existente). Sem isso, qualquer hook do
+kernel quebra em runtime com `No QueryClient set, use QueryClientProvider to
+set one`. Documentado com o trecho de código em `content/docs/registry.mdx`.
+
 ## Estrutura dos itens
 
 - **`@kso/base`** (`registry:lib`) — o kernel compartilhado: hooks (`use-crud`,
-  `use-modal-instance`), contexts/providers (store, modal, auth), a camada de
+  `use-modal-instance`), contexts/providers (store, modal, auth, tema,
+  socket), o shell do app (sidebar, root-layout-content), a camada de
   permissões e feature flags, `DataTable`, `FormFields` e os componentes de
   `components/ui/` que **não** são primitivas shadcn de prateleira (`combobox*`,
   `multi-select`, `native-select`, `image-upload` — ver "Achado" abaixo). Todo
@@ -156,7 +179,7 @@ instalação de um módulo de cadastro falha ao tentar baixar esses dois itens.
 ## Limitações conhecidas do piloto
 
 - Só 6 dos 13 módulos de `(cadastros)` estão publicados.
-- `@kso/base` tem 59 arquivos e puxa ~24 pacotes npm — é pesado por natureza,
+- `@kso/base` tem 84 arquivos e puxa ~27 pacotes npm — é pesado por natureza,
   porque o kernel deste app é genuinamente acoplado (auth, offline sync, feature
   flags, branding por loja tudo junto). Não dá pra fatiar mais fino sem separar
   essas responsabilidades no código-fonte primeiro.
