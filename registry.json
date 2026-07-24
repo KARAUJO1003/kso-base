@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "kso",
-  "homepage": "https://TODO-definir-dominio-publicado.example.com",
+  "homepage": "https://kso-base.vercel.app",
   "items": [
     {
       "name": "base",
@@ -93,6 +93,11 @@
           "path": "src/config/brand.config.ts",
           "type": "registry:lib",
           "target": "~/src/config/brand.config.ts"
+        },
+        {
+          "path": "src/config/demo.config.ts",
+          "type": "registry:lib",
+          "target": "~/src/config/demo.config.ts"
         },
         {
           "path": "src/config/session-config.ts",

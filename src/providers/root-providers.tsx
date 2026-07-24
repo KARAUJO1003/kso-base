@@ -9,6 +9,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "sonner";
 import { SocketProvider } from "./socket-provider";
+import "@/lib/mock/bootstrap";
 
 const queryClient = new QueryClient();
 export function RootProviders({ children }: { children: React.ReactNode }) {

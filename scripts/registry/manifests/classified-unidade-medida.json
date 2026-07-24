@@ -43,6 +43,7 @@
     "src/components/layout/page-container.tsx",
     "src/components/shared/import-spreadsheet-button.tsx",
     "src/config/brand.config.ts",
+    "src/config/demo.config.ts",
     "src/config/session-config.ts",
     "src/config/sidebar-menu.config.ts",
     "src/config/site-config.ts",

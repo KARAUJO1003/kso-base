@@ -15,6 +15,20 @@ const SRC = join(ROOT, "src");
 const IMPORT_RE = /(?:import|export)\s+(?:type\s+)?(?:[\s\S]*?)\s+from\s+["']([^"']+)["']|import\s*\(\s*["']([^"']+)["']\s*\)|require\(\s*["']([^"']+)["']\s*\)/g;
 const CANDIDATE_EXT = [".ts", ".tsx", ".js", ".jsx"];
 
+// Infra exclusiva do modo demo deste repo (dados fake, deploy sem backend —
+// ver content/docs/mock-data.mdx). Nunca deve entrar no registry: um projeto
+// cliente que instala @kso/lojas não deve ganhar @faker-js/faker de brinde.
+// A checagem é sobre o caminho já resolvido (relativo à raiz do repo).
+const EXCLUDED_PATH_PREFIXES = ["src/lib/mock/"];
+const EXCLUDED_PATHS = [];
+
+function isExcludedPath(relPath) {
+  return (
+    EXCLUDED_PATHS.includes(relPath) ||
+    EXCLUDED_PATH_PREFIXES.some((prefix) => relPath.startsWith(prefix))
+  );
+}
+
 function resolveSpecifier(specifier, fromFile) {
   let base;
   if (specifier.startsWith("@/")) {
@@ -75,6 +89,8 @@ function traceFrom(entryFiles) {
 
       const resolved = resolveSpecifier(specifier, file);
       if (resolved.kind === "file") {
+        const relPath = resolved.path.replace(ROOT + "/", "");
+        if (isExcludedPath(relPath)) continue;
         if (!files.has(resolved.path)) queue.push(resolved.path);
       } else if (resolved.kind === "npm") {
         npmPackages.add(resolved.name);
