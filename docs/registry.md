@@ -19,6 +19,16 @@ Isso é uma feature nativa do shadcn CLI (3.0+): itens de registry declaram
 Não é sync automático (tipo Dependabot) — é pull sob demanda; rodar `add` de novo
 sobrescreve o arquivo local (sem merge de 3 vias).
 
+> **Pré-requisito não opcional: o projeto de destino precisa usar pasta `src/`.**
+> Os `target` dos arquivos de módulo são caminhos fixos tipo
+> `src/features/(cadastros)/lojas/...`, copiando a estrutura exata do
+> kso-base. Instalar num projeto Next.js sem `src/` na raiz faz o CLI criar
+> uma `src/` do zero e duplicar tudo que já existia solto na raiz por
+> baixo — já aconteceu (ver issue reportada por usuário testando em projeto
+> sem `src/`). `@kso/image-upload` é exceção (standalone, só usa `lib/utils`).
+> Recuperação, se acontecer: a `src/` criada é inteiramente nova/untracked,
+> então `git status` confirma e apagar a pasta desfaz sem perda.
+
 ## Estrutura dos itens
 
 - **`@kso/base`** (`registry:lib`) — o kernel compartilhado: hooks (`use-crud`,
@@ -153,3 +163,6 @@ instalação de um módulo de cadastro falha ao tentar baixar esses dois itens.
 - Não cobre módulos fora de `(cadastros)` (ex: `users`, `roles`, `permissions`).
 - Sem CI publicando o registry automaticamente a cada push — hoje é
   `npm run registry:build` manual.
+- Assume que o projeto de destino usa `src/` na mesma estrutura do kso-base
+  (ver aviso acima) — não adapta pra projetos sem `src/` nem para aliases de
+  `components.json` diferentes dos daqui.
