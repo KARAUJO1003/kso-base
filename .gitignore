@@ -39,6 +39,10 @@ yarn-error.log*
 # vercel
 .vercel
 
+# shadcn registry — gerado por `npm run registry:build` a partir de registry.json,
+# nunca editar à mão (ver docs/registry.md)
+/public/r/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

@@ -1,0 +1,803 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "kso",
+  "homepage": "https://TODO-definir-dominio-publicado.example.com",
+  "items": [
+    {
+      "name": "base",
+      "type": "registry:lib",
+      "title": "kso-base — kernel compartilhado",
+      "description": "Hooks (use-crud, use-modal-instance), contexts/providers (store, modal, auth), camada de permissões e feature flags, DataTable, FormFields e demais componentes ui/ próprios (combobox, image-upload, multi-select, native-select). Pré-requisito de todos os módulos de negócio deste registry.",
+      "files": [
+        {
+          "path": "src/components/extensions/datatable/datatable-columns-toggle.tsx",
+          "type": "registry:component",
+          "target": "~/src/components/extensions/datatable/datatable-columns-toggle.tsx"
+        },
+        {
+          "path": "src/components/extensions/datatable/datatable-filters.tsx",
+          "type": "registry:component",
+          "target": "~/src/components/extensions/datatable/datatable-filters.tsx"
+        },
+        {
+          "path": "src/components/extensions/datatable/datatable-header-column.tsx",
+          "type": "registry:component",
+          "target": "~/src/components/extensions/datatable/datatable-header-column.tsx"
+        },
+        {
+          "path": "src/components/extensions/datatable/datatable-pagination.tsx",
+          "type": "registry:component",
+          "target": "~/src/components/extensions/datatable/datatable-pagination.tsx"
+        },
+        {
+          "path": "src/components/extensions/datatable/datatable-skeleton.tsx",
+          "type": "registry:component",
+          "target": "~/src/components/extensions/datatable/datatable-skeleton.tsx"
+        },
+        {
+          "path": "src/components/extensions/datatable/datatable.tsx",
+          "type": "registry:component",
+          "target": "~/src/components/extensions/datatable/datatable.tsx"
+        },
+        {
+          "path": "src/components/extensions/search-highlight.tsx",
+          "type": "registry:component",
+          "target": "~/src/components/extensions/search-highlight.tsx"
+        },
+        {
+          "path": "src/components/layout/page-container.tsx",
+          "type": "registry:component",
+          "target": "~/src/components/layout/page-container.tsx"
+        },
+        {
+          "path": "src/components/shared/form-fields.tsx",
+          "type": "registry:component",
+          "target": "~/src/components/shared/form-fields.tsx"
+        },
+        {
+          "path": "src/components/shared/import-spreadsheet-button.tsx",
+          "type": "registry:component",
+          "target": "~/src/components/shared/import-spreadsheet-button.tsx"
+        },
+        {
+          "path": "src/components/ui/combobox-async.tsx",
+          "type": "registry:ui",
+          "target": "~/src/components/ui/combobox-async.tsx"
+        },
+        {
+          "path": "src/components/ui/combobox-select.tsx",
+          "type": "registry:ui",
+          "target": "~/src/components/ui/combobox-select.tsx"
+        },
+        {
+          "path": "src/components/ui/combobox.tsx",
+          "type": "registry:ui",
+          "target": "~/src/components/ui/combobox.tsx"
+        },
+        {
+          "path": "src/components/ui/image-upload.tsx",
+          "type": "registry:ui",
+          "target": "~/src/components/ui/image-upload.tsx"
+        },
+        {
+          "path": "src/components/ui/multi-select.tsx",
+          "type": "registry:ui",
+          "target": "~/src/components/ui/multi-select.tsx"
+        },
+        {
+          "path": "src/components/ui/native-select.tsx",
+          "type": "registry:ui",
+          "target": "~/src/components/ui/native-select.tsx"
+        },
+        {
+          "path": "src/config/brand.config.ts",
+          "type": "registry:lib",
+          "target": "~/src/config/brand.config.ts"
+        },
+        {
+          "path": "src/config/session-config.ts",
+          "type": "registry:lib",
+          "target": "~/src/config/session-config.ts"
+        },
+        {
+          "path": "src/config/sidebar-menu.config.ts",
+          "type": "registry:lib",
+          "target": "~/src/config/sidebar-menu.config.ts"
+        },
+        {
+          "path": "src/config/site-config.ts",
+          "type": "registry:lib",
+          "target": "~/src/config/site-config.ts"
+        },
+        {
+          "path": "src/contexts/store-context.tsx",
+          "type": "registry:lib",
+          "target": "~/src/contexts/store-context.tsx"
+        },
+        {
+          "path": "src/hooks/use-crud.ts",
+          "type": "registry:hook",
+          "target": "~/src/hooks/use-crud.ts"
+        },
+        {
+          "path": "src/hooks/use-debounce-fn.ts",
+          "type": "registry:hook",
+          "target": "~/src/hooks/use-debounce-fn.ts"
+        },
+        {
+          "path": "src/hooks/use-debounce.ts",
+          "type": "registry:hook",
+          "target": "~/src/hooks/use-debounce.ts"
+        },
+        {
+          "path": "src/hooks/use-isomorphic-layout-effect.ts",
+          "type": "registry:hook",
+          "target": "~/src/hooks/use-isomorphic-layout-effect.ts"
+        },
+        {
+          "path": "src/hooks/use-latest.ts",
+          "type": "registry:hook",
+          "target": "~/src/hooks/use-latest.ts"
+        },
+        {
+          "path": "src/hooks/use-load-options.ts",
+          "type": "registry:hook",
+          "target": "~/src/hooks/use-load-options.ts"
+        },
+        {
+          "path": "src/hooks/use-modal-instance.ts",
+          "type": "registry:hook",
+          "target": "~/src/hooks/use-modal-instance.ts"
+        },
+        {
+          "path": "src/hooks/use-unmount.ts",
+          "type": "registry:hook",
+          "target": "~/src/hooks/use-unmount.ts"
+        },
+        {
+          "path": "src/lib/asset-url.ts",
+          "type": "registry:lib",
+          "target": "~/src/lib/asset-url.ts"
+        },
+        {
+          "path": "src/lib/auth/components/auth-guard.tsx",
+          "type": "registry:lib",
+          "target": "~/src/lib/auth/components/auth-guard.tsx"
+        },
+        {
+          "path": "src/lib/auth/components/can.tsx",
+          "type": "registry:lib",
+          "target": "~/src/lib/auth/components/can.tsx"
+        },
+        {
+          "path": "src/lib/auth/config/index.ts",
+          "type": "registry:lib",
+          "target": "~/src/lib/auth/config/index.ts"
+        },
+        {
+          "path": "src/lib/auth/contexts/auth-guard-context.tsx",
+          "type": "registry:lib",
+          "target": "~/src/lib/auth/contexts/auth-guard-context.tsx"
+        },
+        {
+          "path": "src/lib/auth/hooks/use-abilities.ts",
+          "type": "registry:lib",
+          "target": "~/src/lib/auth/hooks/use-abilities.ts"
+        },
+        {
+          "path": "src/lib/auth/hooks/use-auth-guard-context.ts",
+          "type": "registry:lib",
+          "target": "~/src/lib/auth/hooks/use-auth-guard-context.ts"
+        },
+        {
+          "path": "src/lib/auth/hooks/use-auth-user.ts",
+          "type": "registry:lib",
+          "target": "~/src/lib/auth/hooks/use-auth-user.ts"
+        },
+        {
+          "path": "src/lib/auth/hooks/use-auth.ts",
+          "type": "registry:lib",
+          "target": "~/src/lib/auth/hooks/use-auth.ts"
+        },
+        {
+          "path": "src/lib/auth/index.ts",
+          "type": "registry:lib",
+          "target": "~/src/lib/auth/index.ts"
+        },
+        {
+          "path": "src/lib/auth/providers/auth-provider.tsx",
+          "type": "registry:lib",
+          "target": "~/src/lib/auth/providers/auth-provider.tsx"
+        },
+        {
+          "path": "src/lib/auth/proxy-handler.ts",
+          "type": "registry:lib",
+          "target": "~/src/lib/auth/proxy-handler.ts"
+        },
+        {
+          "path": "src/lib/auth/types/auth.ts",
+          "type": "registry:lib",
+          "target": "~/src/lib/auth/types/auth.ts"
+        },
+        {
+          "path": "src/lib/auth/types/permissions.ts",
+          "type": "registry:lib",
+          "target": "~/src/lib/auth/types/permissions.ts"
+        },
+        {
+          "path": "src/lib/auth/utils/build-login-url.ts",
+          "type": "registry:lib",
+          "target": "~/src/lib/auth/utils/build-login-url.ts"
+        },
+        {
+          "path": "src/lib/axios-instance.ts",
+          "type": "registry:lib",
+          "target": "~/src/lib/axios-instance.ts"
+        },
+        {
+          "path": "src/lib/feature-flags/components/feature-flag.ts",
+          "type": "registry:lib",
+          "target": "~/src/lib/feature-flags/components/feature-flag.ts"
+        },
+        {
+          "path": "src/lib/feature-flags/feature-flag.ts",
+          "type": "registry:lib",
+          "target": "~/src/lib/feature-flags/feature-flag.ts"
+        },
+        {
+          "path": "src/lib/feature-flags/flags.config.ts",
+          "type": "registry:lib",
+          "target": "~/src/lib/feature-flags/flags.config.ts"
+        },
+        {
+          "path": "src/lib/feature-flags/types/feature-flags.ts",
+          "type": "registry:lib",
+          "target": "~/src/lib/feature-flags/types/feature-flags.ts"
+        },
+        {
+          "path": "src/lib/messages.ts",
+          "type": "registry:lib",
+          "target": "~/src/lib/messages.ts"
+        },
+        {
+          "path": "src/lib/offline/db.ts",
+          "type": "registry:lib",
+          "target": "~/src/lib/offline/db.ts"
+        },
+        {
+          "path": "src/lib/offline/utils.ts",
+          "type": "registry:lib",
+          "target": "~/src/lib/offline/utils.ts"
+        },
+        {
+          "path": "src/lib/session/client.ts",
+          "type": "registry:lib",
+          "target": "~/src/lib/session/client.ts"
+        },
+        {
+          "path": "src/lib/session/utils.ts",
+          "type": "registry:lib",
+          "target": "~/src/lib/session/utils.ts"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "~/src/lib/utils.ts"
+        },
+        {
+          "path": "src/modules/registry.ts",
+          "type": "registry:lib",
+          "target": "~/src/modules/registry.ts"
+        },
+        {
+          "path": "src/providers/modal-provider.tsx",
+          "type": "registry:lib",
+          "target": "~/src/providers/modal-provider.tsx"
+        },
+        {
+          "path": "src/types/store-branding.ts",
+          "type": "registry:lib",
+          "target": "~/src/types/store-branding.ts"
+        },
+        {
+          "path": "src/types/store.ts",
+          "type": "registry:lib",
+          "target": "~/src/types/store.ts"
+        }
+      ],
+      "registryDependencies": [
+        "alert-dialog",
+        "aspect-ratio",
+        "avatar",
+        "badge",
+        "button",
+        "checkbox",
+        "command",
+        "dialog",
+        "dropdown-menu",
+        "field",
+        "input",
+        "input-group",
+        "input-otp",
+        "label",
+        "radio-group",
+        "scroll-area",
+        "select",
+        "separator",
+        "sheet",
+        "skeleton",
+        "slider",
+        "spinner",
+        "switch",
+        "table",
+        "textarea",
+        "toggle",
+        "toggle-group",
+        "@reui/autocomplete",
+        "@reui/number-field"
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "@hookform/resolvers",
+        "@radix-ui/react-icons",
+        "@tabler/icons-react",
+        "@tanstack/react-query",
+        "@tanstack/react-table",
+        "axios",
+        "class-variance-authority",
+        "clsx",
+        "cmdk",
+        "date-fns",
+        "es-toolkit",
+        "input-otp",
+        "jose",
+        "lucide-react",
+        "motion",
+        "next",
+        "nookies",
+        "react",
+        "react-hook-form",
+        "sonner",
+        "tailwind-merge",
+        "xlsx",
+        "zod"
+      ]
+    },
+    {
+      "name": "lojas",
+      "type": "registry:block",
+      "title": "Lojas",
+      "description": "Cadastro de lojas, com identidade visual (branding) por loja.",
+      "files": [
+        {
+          "path": "src/app/(root)/(cadastros)/lojas/page.tsx",
+          "type": "registry:page",
+          "target": "~/src/app/(root)/(cadastros)/lojas/page.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/lojas/components/editar-lojas-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/lojas/components/editar-lojas-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/lojas/components/excluir-lojas-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/lojas/components/excluir-lojas-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/lojas/components/form-lojas.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/lojas/components/form-lojas.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/lojas/components/table-columns.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/lojas/components/table-columns.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/lojas/components/table.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/lojas/components/table.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/lojas/feature.tsx",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/lojas/feature.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/lojas/utils/constants.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/lojas/utils/constants.ts"
+        },
+        {
+          "path": "src/features/(cadastros)/lojas/utils/loja-branding-form.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/lojas/utils/loja-branding-form.ts"
+        },
+        {
+          "path": "src/features/(cadastros)/lojas/utils/module-utils.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/lojas/utils/module-utils.ts"
+        },
+        {
+          "path": "src/types/lojas/types.ts",
+          "type": "registry:lib",
+          "target": "~/src/types/lojas/types.ts"
+        }
+      ],
+      "registryDependencies": [
+        "@kso/base",
+        "@kso/depositos",
+        "@kso/tabelas-precos"
+      ]
+    },
+    {
+      "name": "depositos",
+      "type": "registry:block",
+      "title": "Depósitos",
+      "description": "Cadastro de depósitos vinculados a uma loja.",
+      "files": [
+        {
+          "path": "src/app/(root)/(cadastros)/depositos/page.tsx",
+          "type": "registry:page",
+          "target": "~/src/app/(root)/(cadastros)/depositos/page.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/depositos/components/editar-deposito-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/depositos/components/editar-deposito-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/depositos/components/excluir-deposito-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/depositos/components/excluir-deposito-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/depositos/components/form-deposito.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/depositos/components/form-deposito.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/depositos/components/table-columns.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/depositos/components/table-columns.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/depositos/components/table.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/depositos/components/table.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/depositos/feature.tsx",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/depositos/feature.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/depositos/utils/constants.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/depositos/utils/constants.ts"
+        },
+        {
+          "path": "src/features/(cadastros)/depositos/utils/module-utils.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/depositos/utils/module-utils.ts"
+        },
+        {
+          "path": "src/types/deposito/types.ts",
+          "type": "registry:lib",
+          "target": "~/src/types/deposito/types.ts"
+        }
+      ],
+      "registryDependencies": [
+        "@kso/base"
+      ]
+    },
+    {
+      "name": "tabelas-precos",
+      "type": "registry:block",
+      "title": "Tabelas de Preço",
+      "description": "Cadastro de tabelas de preço e itens de preço.",
+      "files": [
+        {
+          "path": "src/app/(root)/(cadastros)/tabelas-precos/page.tsx",
+          "type": "registry:page",
+          "target": "~/src/app/(root)/(cadastros)/tabelas-precos/page.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/tabelas-precos/components/adicionar-preco-item-action.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/tabelas-precos/components/adicionar-preco-item-action.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/tabelas-precos/components/adicionar-preco-item-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/tabelas-precos/components/adicionar-preco-item-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/tabelas-precos/components/editar-tabelas-precos-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/tabelas-precos/components/editar-tabelas-precos-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/tabelas-precos/components/excluir-tabelas-precos-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/tabelas-precos/components/excluir-tabelas-precos-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/tabelas-precos/components/form-tabelas-precos.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/tabelas-precos/components/form-tabelas-precos.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/tabelas-precos/components/table-columns.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/tabelas-precos/components/table-columns.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/tabelas-precos/components/table.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/tabelas-precos/components/table.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/tabelas-precos/feature.tsx",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/tabelas-precos/feature.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/tabelas-precos/utils/constants.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/tabelas-precos/utils/constants.ts"
+        },
+        {
+          "path": "src/features/(cadastros)/tabelas-precos/utils/module-utils.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/tabelas-precos/utils/module-utils.ts"
+        },
+        {
+          "path": "src/types/tabelas-precos/types.ts",
+          "type": "registry:lib",
+          "target": "~/src/types/tabelas-precos/types.ts"
+        }
+      ],
+      "registryDependencies": [
+        "@kso/base",
+        "@kso/itens"
+      ]
+    },
+    {
+      "name": "itens",
+      "type": "registry:block",
+      "title": "Itens",
+      "description": "Cadastro de itens (produtos), com estoque e composição.",
+      "files": [
+        {
+          "path": "src/app/(root)/(cadastros)/itens/page.tsx",
+          "type": "registry:page",
+          "target": "~/src/app/(root)/(cadastros)/itens/page.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/itens/components/editar-itens-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/itens/components/editar-itens-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/itens/components/excluir-itens-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/itens/components/excluir-itens-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/itens/components/form-itens.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/itens/components/form-itens.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/itens/components/table-columns.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/itens/components/table-columns.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/itens/components/table.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/itens/components/table.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/itens/feature.tsx",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/itens/feature.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/itens/utils/constants.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/itens/utils/constants.ts"
+        },
+        {
+          "path": "src/features/(cadastros)/itens/utils/module-utils.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/itens/utils/module-utils.ts"
+        },
+        {
+          "path": "src/types/items/types.ts",
+          "type": "registry:lib",
+          "target": "~/src/types/items/types.ts"
+        },
+        {
+          "path": "src/types/itens/types.ts",
+          "type": "registry:lib",
+          "target": "~/src/types/itens/types.ts"
+        }
+      ],
+      "registryDependencies": [
+        "@kso/base",
+        "@kso/depositos",
+        "@kso/grupos-itens",
+        "@kso/lojas",
+        "@kso/tabelas-precos",
+        "@kso/unidade-medida"
+      ]
+    },
+    {
+      "name": "grupos-itens",
+      "type": "registry:block",
+      "title": "Grupos de Itens",
+      "description": "Cadastro de grupos de itens.",
+      "files": [
+        {
+          "path": "src/app/(root)/(cadastros)/grupos-itens/page.tsx",
+          "type": "registry:page",
+          "target": "~/src/app/(root)/(cadastros)/grupos-itens/page.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/grupos-itens/components/editar-grupos-itens-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/grupos-itens/components/editar-grupos-itens-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/grupos-itens/components/excluir-grupos-itens-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/grupos-itens/components/excluir-grupos-itens-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/grupos-itens/components/form-grupos-itens.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/grupos-itens/components/form-grupos-itens.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/grupos-itens/components/table-columns.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/grupos-itens/components/table-columns.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/grupos-itens/components/table.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/grupos-itens/components/table.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/grupos-itens/feature.tsx",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/grupos-itens/feature.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/grupos-itens/utils/constants.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/grupos-itens/utils/constants.ts"
+        },
+        {
+          "path": "src/features/(cadastros)/grupos-itens/utils/module-utils.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/grupos-itens/utils/module-utils.ts"
+        },
+        {
+          "path": "src/types/grupos-itens/types.ts",
+          "type": "registry:lib",
+          "target": "~/src/types/grupos-itens/types.ts"
+        }
+      ],
+      "registryDependencies": [
+        "@kso/base"
+      ]
+    },
+    {
+      "name": "unidade-medida",
+      "type": "registry:block",
+      "title": "Unidade de Medida",
+      "description": "Cadastro de unidades de medida por loja.",
+      "files": [
+        {
+          "path": "src/app/(root)/(cadastros)/unidades-medidas/page.tsx",
+          "type": "registry:page",
+          "target": "~/src/app/(root)/(cadastros)/unidades-medidas/page.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/unidade-medida/components/editar-unidade-medida-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/unidade-medida/components/editar-unidade-medida-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/unidade-medida/components/excluir-unidade-medida-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/unidade-medida/components/excluir-unidade-medida-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/unidade-medida/components/form-unidade-medida.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/unidade-medida/components/form-unidade-medida.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/unidade-medida/components/table-columns.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/unidade-medida/components/table-columns.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/unidade-medida/components/table.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/unidade-medida/components/table.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/unidade-medida/feature.tsx",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/unidade-medida/feature.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/unidade-medida/utils/constants.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/unidade-medida/utils/constants.ts"
+        },
+        {
+          "path": "src/features/(cadastros)/unidade-medida/utils/module-utils.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/unidade-medida/utils/module-utils.ts"
+        },
+        {
+          "path": "src/types/unidade-medida/types.ts",
+          "type": "registry:lib",
+          "target": "~/src/types/unidade-medida/types.ts"
+        }
+      ],
+      "registryDependencies": [
+        "@kso/base",
+        "@kso/lojas"
+      ]
+    },
+    {
+      "name": "cadastros",
+      "type": "registry:block",
+      "title": "Cadastros (piloto)",
+      "description": "Meta-item sem arquivos próprios: instala de uma vez o subconjunto de módulos de cadastro já publicados neste registry. Os demais módulos de (cadastros) ainda não foram migrados — ver docs/registry.md.",
+      "files": [],
+      "registryDependencies": [
+        "@kso/lojas",
+        "@kso/depositos",
+        "@kso/tabelas-precos",
+        "@kso/itens",
+        "@kso/grupos-itens",
+        "@kso/unidade-medida"
+      ]
+    },
+    {
+      "name": "image-upload",
+      "type": "registry:ui",
+      "title": "Image Upload",
+      "description": "Campo de upload de imagem com preview, drag&drop e validação de tamanho/tipo. 100% standalone: não depende do kernel base, só de src/lib/utils.ts.",
+      "files": [
+        {
+          "path": "src/components/ui/image-upload.tsx",
+          "type": "registry:ui",
+          "target": "~/src/components/ui/image-upload.tsx"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "~/src/lib/utils.ts"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "lucide-react",
+        "next",
+        "react",
+        "sonner",
+        "tailwind-merge"
+      ]
+    }
+  ]
+}

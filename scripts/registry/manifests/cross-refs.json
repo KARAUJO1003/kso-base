@@ -1,0 +1,21 @@
+{
+  "lojas": [
+    "depositos",
+    "tabelas-precos"
+  ],
+  "depositos": [],
+  "tabelas-precos": [
+    "itens"
+  ],
+  "itens": [
+    "depositos",
+    "grupos-itens",
+    "lojas",
+    "tabelas-precos",
+    "unidade-medida"
+  ],
+  "grupos-itens": [],
+  "unidade-medida": [
+    "lojas"
+  ]
+}
