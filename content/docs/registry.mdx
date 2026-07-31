@@ -15,6 +15,19 @@ npx shadcn add @kso/cadastros   # todos os módulos de cadastro publicados
 npx shadcn add @kso/image-upload # só um componente avulso
 ```
 
+<Callout variant="warning" title="Pré-requisito: o projeto de destino precisa usar pasta src/">
+  Os itens de módulo (`@kso/lojas`, `@kso/base`, `@kso/cadastros`...)
+  instalam em caminhos fixos como `src/features/(cadastros)/lojas/...`,
+  `src/lib/...`, `src/contexts/...` — copiando a estrutura exata do
+  kso-base. Se o projeto de destino **não** tiver uma pasta `src/` na raiz
+  (Next.js permite os dois formatos), o CLI cria uma `src/` nova do zero e
+  duplica ali dentro tudo que já existia solto na raiz, quebrando a
+  estrutura do projeto. `@kso/image-upload` é a exceção — é standalone e
+  não depende dessa convenção. Antes de instalar um módulo, confirme que o
+  projeto já usa `src/`; se não usar, não rode `add` direto — ajuste os
+  `target` dos arquivos manualmente depois de baixar, ou peça ajuda.
+</Callout>
+
 ## Como está organizado
 
 - **`@kso/base`** — o kernel compartilhado (hooks, contexts, `DataTable`,
