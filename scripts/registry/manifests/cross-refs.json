@@ -17,5 +17,49 @@
   "grupos-itens": [],
   "unidade-medida": [
     "lojas"
+  ],
+  "cargos": [],
+  "centros-custos": [],
+  "colaboradores": [
+    "cargos",
+    "centros-custos",
+    "gerencias",
+    "pessoas",
+    "setores"
+  ],
+  "formas-pagamentos": [],
+  "fornecedores": [
+    "lojas",
+    "pessoas"
+  ],
+  "gerencias": [],
+  "grupos-lojas": [],
+  "motivos-trocas": [],
+  "pessoas": [],
+  "setores": [
+    "lojas"
+  ],
+  "sub-grupos-itens": [],
+  "users": [
+    "lojas",
+    "roles",
+    "setores"
+  ],
+  "roles": [
+    "modules",
+    "users"
+  ],
+  "permissions": [
+    "modules",
+    "roles",
+    "users"
+  ],
+  "systems": [
+    "modules",
+    "users"
+  ],
+  "modules": [
+    "permissions",
+    "users"
   ]
 }

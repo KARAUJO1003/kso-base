@@ -10,6 +10,11 @@
       "description": "Hooks (use-crud, use-modal-instance), contexts/providers (store, modal, auth), camada de permissões e feature flags, DataTable, FormFields e demais componentes ui/ próprios (combobox, image-upload, multi-select, native-select). Pré-requisito de todos os módulos de negócio deste registry.",
       "files": [
         {
+          "path": "src/components/extensions/datatable/column-builder.tsx",
+          "type": "registry:component",
+          "target": "~/src/components/extensions/datatable/column-builder.tsx"
+        },
+        {
           "path": "src/components/extensions/datatable/datatable-columns-toggle.tsx",
           "type": "registry:component",
           "target": "~/src/components/extensions/datatable/datatable-columns-toggle.tsx"
@@ -260,6 +265,11 @@
           "target": "~/src/lib/feature-flags/types/feature-flags.ts"
         },
         {
+          "path": "src/lib/input-masks.ts",
+          "type": "registry:lib",
+          "target": "~/src/lib/input-masks.ts"
+        },
+        {
           "path": "src/lib/messages.ts",
           "type": "registry:lib",
           "target": "~/src/lib/messages.ts"
@@ -311,15 +321,20 @@
         }
       ],
       "registryDependencies": [
+        "accordion",
+        "alert",
         "alert-dialog",
         "aspect-ratio",
         "avatar",
         "badge",
         "button",
+        "button-group",
         "checkbox",
         "command",
         "dialog",
+        "drawer",
         "dropdown-menu",
+        "empty",
         "field",
         "input",
         "input-group",
@@ -335,6 +350,7 @@
         "spinner",
         "switch",
         "table",
+        "tabs",
         "textarea",
         "toggle",
         "toggle-group",
@@ -343,6 +359,7 @@
       ],
       "dependencies": [
         "@base-ui/react",
+        "@features/(cadastros)",
         "@hookform/resolvers",
         "@radix-ui/react-icons",
         "@tabler/icons-react",
@@ -364,6 +381,7 @@
         "react-hook-form",
         "sonner",
         "tailwind-merge",
+        "vaul",
         "xlsx",
         "zod"
       ]
@@ -430,6 +448,9 @@
           "target": "~/src/types/lojas/types.ts"
         }
       ],
+      "categories": [
+        "cadastros"
+      ],
       "registryDependencies": [
         "@kso/base",
         "@kso/depositos",
@@ -492,6 +513,9 @@
           "type": "registry:lib",
           "target": "~/src/types/deposito/types.ts"
         }
+      ],
+      "categories": [
+        "cadastros"
       ],
       "registryDependencies": [
         "@kso/base"
@@ -564,6 +588,9 @@
           "target": "~/src/types/tabelas-precos/types.ts"
         }
       ],
+      "categories": [
+        "cadastros"
+      ],
       "registryDependencies": [
         "@kso/base",
         "@kso/itens"
@@ -631,6 +658,9 @@
           "target": "~/src/types/itens/types.ts"
         }
       ],
+      "categories": [
+        "cadastros"
+      ],
       "registryDependencies": [
         "@kso/base",
         "@kso/depositos",
@@ -697,6 +727,9 @@
           "target": "~/src/types/grupos-itens/types.ts"
         }
       ],
+      "categories": [
+        "cadastros"
+      ],
       "registryDependencies": [
         "@kso/base"
       ]
@@ -758,16 +791,736 @@
           "target": "~/src/types/unidade-medida/types.ts"
         }
       ],
+      "categories": [
+        "cadastros"
+      ],
       "registryDependencies": [
         "@kso/base",
         "@kso/lojas"
       ]
     },
     {
+      "name": "cargos",
+      "type": "registry:block",
+      "title": "Cargos",
+      "description": "Cadastro de cargos.",
+      "files": [
+        {
+          "path": "src/app/(root)/(cadastros)/cargos/page.tsx",
+          "type": "registry:page",
+          "target": "~/src/app/(root)/(cadastros)/cargos/page.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/cargos/components/editar-cargos-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/cargos/components/editar-cargos-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/cargos/components/excluir-cargos-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/cargos/components/excluir-cargos-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/cargos/components/form-cargos.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/cargos/components/form-cargos.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/cargos/components/table-columns.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/cargos/components/table-columns.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/cargos/components/table.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/cargos/components/table.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/cargos/feature.tsx",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/cargos/feature.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/cargos/utils/constants.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/cargos/utils/constants.ts"
+        },
+        {
+          "path": "src/features/(cadastros)/cargos/utils/module-utils.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/cargos/utils/module-utils.ts"
+        },
+        {
+          "path": "src/types/cargos/types.ts",
+          "type": "registry:lib",
+          "target": "~/src/types/cargos/types.ts"
+        }
+      ],
+      "categories": [
+        "cadastros"
+      ],
+      "registryDependencies": [
+        "@kso/base"
+      ]
+    },
+    {
+      "name": "centros-custos",
+      "type": "registry:block",
+      "title": "Centro de Custos",
+      "description": "Cadastro de centros de custo.",
+      "files": [
+        {
+          "path": "src/app/(root)/(cadastros)/centros-custos/page.tsx",
+          "type": "registry:page",
+          "target": "~/src/app/(root)/(cadastros)/centros-custos/page.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/centros-custos/components/editar-centros-custos-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/centros-custos/components/editar-centros-custos-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/centros-custos/components/excluir-centros-custos-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/centros-custos/components/excluir-centros-custos-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/centros-custos/components/form-centros-custos.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/centros-custos/components/form-centros-custos.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/centros-custos/components/table-columns.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/centros-custos/components/table-columns.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/centros-custos/components/table.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/centros-custos/components/table.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/centros-custos/feature.tsx",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/centros-custos/feature.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/centros-custos/utils/constants.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/centros-custos/utils/constants.ts"
+        },
+        {
+          "path": "src/features/(cadastros)/centros-custos/utils/module-utils.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/centros-custos/utils/module-utils.ts"
+        },
+        {
+          "path": "src/types/centros-custos/types.ts",
+          "type": "registry:lib",
+          "target": "~/src/types/centros-custos/types.ts"
+        }
+      ],
+      "categories": [
+        "cadastros"
+      ],
+      "registryDependencies": [
+        "@kso/base"
+      ]
+    },
+    {
+      "name": "colaboradores",
+      "type": "registry:block",
+      "title": "Colaboradores",
+      "description": "Cadastro de colaboradores.",
+      "files": [
+        {
+          "path": "src/app/(root)/(cadastros)/colaboradores/page.tsx",
+          "type": "registry:page",
+          "target": "~/src/app/(root)/(cadastros)/colaboradores/page.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/colaboradores/components/editar-colaboradores-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/colaboradores/components/editar-colaboradores-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/colaboradores/components/excluir-colaboradores-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/colaboradores/components/excluir-colaboradores-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/colaboradores/components/form-colaboradores.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/colaboradores/components/form-colaboradores.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/colaboradores/components/table-columns.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/colaboradores/components/table-columns.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/colaboradores/components/table.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/colaboradores/components/table.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/colaboradores/feature.tsx",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/colaboradores/feature.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/colaboradores/utils/constants.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/colaboradores/utils/constants.ts"
+        },
+        {
+          "path": "src/features/(cadastros)/colaboradores/utils/module-utils.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/colaboradores/utils/module-utils.ts"
+        },
+        {
+          "path": "src/types/colaboradores/types.ts",
+          "type": "registry:lib",
+          "target": "~/src/types/colaboradores/types.ts"
+        }
+      ],
+      "categories": [
+        "cadastros"
+      ],
+      "registryDependencies": [
+        "@kso/base",
+        "@kso/cargos",
+        "@kso/centros-custos",
+        "@kso/gerencias",
+        "@kso/pessoas",
+        "@kso/setores"
+      ]
+    },
+    {
+      "name": "formas-pagamentos",
+      "type": "registry:block",
+      "title": "Formas de Pagamento",
+      "description": "Cadastro de formas de pagamento.",
+      "files": [
+        {
+          "path": "src/app/(root)/(cadastros)/formas-pagamentos/page.tsx",
+          "type": "registry:page",
+          "target": "~/src/app/(root)/(cadastros)/formas-pagamentos/page.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/formas-pagamentos/components/editar-formas-pagamentos-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/formas-pagamentos/components/editar-formas-pagamentos-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/formas-pagamentos/components/excluir-formas-pagamentos-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/formas-pagamentos/components/excluir-formas-pagamentos-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/formas-pagamentos/components/form-formas-pagamentos.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/formas-pagamentos/components/form-formas-pagamentos.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/formas-pagamentos/components/table-columns.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/formas-pagamentos/components/table-columns.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/formas-pagamentos/components/table.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/formas-pagamentos/components/table.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/formas-pagamentos/feature.tsx",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/formas-pagamentos/feature.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/formas-pagamentos/utils/constants.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/formas-pagamentos/utils/constants.ts"
+        },
+        {
+          "path": "src/features/(cadastros)/formas-pagamentos/utils/module-utils.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/formas-pagamentos/utils/module-utils.ts"
+        },
+        {
+          "path": "src/types/formas-pagamentos/types.ts",
+          "type": "registry:lib",
+          "target": "~/src/types/formas-pagamentos/types.ts"
+        }
+      ],
+      "categories": [
+        "cadastros"
+      ],
+      "registryDependencies": [
+        "@kso/base"
+      ]
+    },
+    {
+      "name": "fornecedores",
+      "type": "registry:block",
+      "title": "Fornecedores",
+      "description": "Cadastro de fornecedores.",
+      "files": [
+        {
+          "path": "src/app/(root)/(cadastros)/fornecedores/page.tsx",
+          "type": "registry:page",
+          "target": "~/src/app/(root)/(cadastros)/fornecedores/page.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/fornecedores/components/editar-fornecedores-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/fornecedores/components/editar-fornecedores-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/fornecedores/components/excluir-fornecedores-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/fornecedores/components/excluir-fornecedores-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/fornecedores/components/form-fornecedores.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/fornecedores/components/form-fornecedores.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/fornecedores/components/table-columns.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/fornecedores/components/table-columns.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/fornecedores/components/table.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/fornecedores/components/table.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/fornecedores/feature.tsx",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/fornecedores/feature.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/fornecedores/utils/constants.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/fornecedores/utils/constants.ts"
+        },
+        {
+          "path": "src/features/(cadastros)/fornecedores/utils/module-utils.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/fornecedores/utils/module-utils.ts"
+        },
+        {
+          "path": "src/types/fornecedores/types.ts",
+          "type": "registry:lib",
+          "target": "~/src/types/fornecedores/types.ts"
+        }
+      ],
+      "categories": [
+        "cadastros"
+      ],
+      "registryDependencies": [
+        "@kso/base",
+        "@kso/lojas",
+        "@kso/pessoas"
+      ]
+    },
+    {
+      "name": "gerencias",
+      "type": "registry:block",
+      "title": "Gerências",
+      "description": "Cadastro de gerências.",
+      "files": [
+        {
+          "path": "src/app/(root)/(cadastros)/gerencias/page.tsx",
+          "type": "registry:page",
+          "target": "~/src/app/(root)/(cadastros)/gerencias/page.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/gerencias/components/editar-gerencia-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/gerencias/components/editar-gerencia-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/gerencias/components/excluir-gerencia-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/gerencias/components/excluir-gerencia-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/gerencias/components/form-gerencia.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/gerencias/components/form-gerencia.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/gerencias/components/table-columns.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/gerencias/components/table-columns.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/gerencias/components/table.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/gerencias/components/table.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/gerencias/feature.tsx",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/gerencias/feature.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/gerencias/utils/constants.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/gerencias/utils/constants.ts"
+        },
+        {
+          "path": "src/features/(cadastros)/gerencias/utils/module-utils.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/gerencias/utils/module-utils.ts"
+        },
+        {
+          "path": "src/types/gerencia/types.ts",
+          "type": "registry:lib",
+          "target": "~/src/types/gerencia/types.ts"
+        }
+      ],
+      "categories": [
+        "cadastros"
+      ],
+      "registryDependencies": [
+        "@kso/base"
+      ]
+    },
+    {
+      "name": "grupos-lojas",
+      "type": "registry:block",
+      "title": "Grupo de Lojas",
+      "description": "Cadastro de grupos de lojas.",
+      "files": [
+        {
+          "path": "src/app/(root)/(cadastros)/grupos-lojas/page.tsx",
+          "type": "registry:page",
+          "target": "~/src/app/(root)/(cadastros)/grupos-lojas/page.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/grupos-lojas/components/editar-grupos-lojas-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/grupos-lojas/components/editar-grupos-lojas-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/grupos-lojas/components/excluir-grupos-lojas-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/grupos-lojas/components/excluir-grupos-lojas-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/grupos-lojas/components/form-grupos-lojas.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/grupos-lojas/components/form-grupos-lojas.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/grupos-lojas/components/table-columns.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/grupos-lojas/components/table-columns.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/grupos-lojas/components/table.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/grupos-lojas/components/table.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/grupos-lojas/feature.tsx",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/grupos-lojas/feature.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/grupos-lojas/utils/constants.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/grupos-lojas/utils/constants.ts"
+        },
+        {
+          "path": "src/features/(cadastros)/grupos-lojas/utils/module-utils.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/grupos-lojas/utils/module-utils.ts"
+        },
+        {
+          "path": "src/types/grupos-lojas/types.ts",
+          "type": "registry:lib",
+          "target": "~/src/types/grupos-lojas/types.ts"
+        }
+      ],
+      "categories": [
+        "cadastros"
+      ],
+      "registryDependencies": [
+        "@kso/base"
+      ]
+    },
+    {
+      "name": "motivos-trocas",
+      "type": "registry:block",
+      "title": "Motivos de Trocas",
+      "description": "Cadastro de motivos de trocas.",
+      "files": [
+        {
+          "path": "src/app/(root)/(cadastros)/motivos-trocas/page.tsx",
+          "type": "registry:page",
+          "target": "~/src/app/(root)/(cadastros)/motivos-trocas/page.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/motivos-trocas/components/editar-motivos-trocas-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/motivos-trocas/components/editar-motivos-trocas-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/motivos-trocas/components/excluir-motivos-trocas-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/motivos-trocas/components/excluir-motivos-trocas-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/motivos-trocas/components/form-motivos-trocas.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/motivos-trocas/components/form-motivos-trocas.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/motivos-trocas/components/table-columns.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/motivos-trocas/components/table-columns.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/motivos-trocas/components/table.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/motivos-trocas/components/table.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/motivos-trocas/feature.tsx",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/motivos-trocas/feature.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/motivos-trocas/utils/constants.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/motivos-trocas/utils/constants.ts"
+        },
+        {
+          "path": "src/features/(cadastros)/motivos-trocas/utils/module-utils.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/motivos-trocas/utils/module-utils.ts"
+        },
+        {
+          "path": "src/types/motivos-trocas/types.ts",
+          "type": "registry:lib",
+          "target": "~/src/types/motivos-trocas/types.ts"
+        }
+      ],
+      "categories": [
+        "cadastros"
+      ],
+      "registryDependencies": [
+        "@kso/base"
+      ]
+    },
+    {
+      "name": "pessoas",
+      "type": "registry:block",
+      "title": "Pessoas (Físicas / Jurídicas)",
+      "description": "Cadastro de pessoas físicas e jurídicas.",
+      "files": [
+        {
+          "path": "src/app/(root)/(cadastros)/pessoas/page.tsx",
+          "type": "registry:page",
+          "target": "~/src/app/(root)/(cadastros)/pessoas/page.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/pessoas/components/editar-pessoas-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/pessoas/components/editar-pessoas-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/pessoas/components/excluir-pessoas-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/pessoas/components/excluir-pessoas-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/pessoas/components/form-pessoas.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/pessoas/components/form-pessoas.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/pessoas/components/table-columns.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/pessoas/components/table-columns.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/pessoas/components/table.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/pessoas/components/table.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/pessoas/feature.tsx",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/pessoas/feature.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/pessoas/schemas/pessoa.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/pessoas/schemas/pessoa.ts"
+        },
+        {
+          "path": "src/features/(cadastros)/pessoas/utils/constants.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/pessoas/utils/constants.ts"
+        },
+        {
+          "path": "src/features/(cadastros)/pessoas/utils/module-utils.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/pessoas/utils/module-utils.ts"
+        },
+        {
+          "path": "src/types/pessoas/types.ts",
+          "type": "registry:lib",
+          "target": "~/src/types/pessoas/types.ts"
+        }
+      ],
+      "categories": [
+        "cadastros"
+      ],
+      "registryDependencies": [
+        "@kso/base"
+      ]
+    },
+    {
+      "name": "setores",
+      "type": "registry:block",
+      "title": "Setores",
+      "description": "Cadastro de setores.",
+      "files": [
+        {
+          "path": "src/app/(root)/setores/page.tsx",
+          "type": "registry:page",
+          "target": "~/src/app/(root)/setores/page.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/setores/components/editar-setores-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/setores/components/editar-setores-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/setores/components/excluir-setores-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/setores/components/excluir-setores-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/setores/components/form-setores.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/setores/components/form-setores.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/setores/components/table-columns.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/setores/components/table-columns.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/setores/components/table.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/setores/components/table.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/setores/feature.tsx",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/setores/feature.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/setores/utils/constants.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/setores/utils/constants.ts"
+        },
+        {
+          "path": "src/features/(cadastros)/setores/utils/module-utils.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/setores/utils/module-utils.ts"
+        },
+        {
+          "path": "src/types/setores/type.ts",
+          "type": "registry:lib",
+          "target": "~/src/types/setores/type.ts"
+        }
+      ],
+      "categories": [
+        "cadastros"
+      ],
+      "registryDependencies": [
+        "@kso/base",
+        "@kso/lojas"
+      ]
+    },
+    {
+      "name": "sub-grupos-itens",
+      "type": "registry:block",
+      "title": "Sub Grupos de Itens",
+      "description": "Cadastro de sub grupos de itens, vinculados a um grupo de itens.",
+      "files": [
+        {
+          "path": "src/app/(root)/(cadastros)/sub-grupos-itens/page.tsx",
+          "type": "registry:page",
+          "target": "~/src/app/(root)/(cadastros)/sub-grupos-itens/page.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/sub-grupos-itens/components/editar-sub-grupos-itens-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/sub-grupos-itens/components/editar-sub-grupos-itens-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/sub-grupos-itens/components/excluir-sub-grupos-itens-modal.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/sub-grupos-itens/components/excluir-sub-grupos-itens-modal.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/sub-grupos-itens/components/form-sub-grupos-itens.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/sub-grupos-itens/components/form-sub-grupos-itens.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/sub-grupos-itens/components/table-columns.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/sub-grupos-itens/components/table-columns.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/sub-grupos-itens/components/table.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(cadastros)/sub-grupos-itens/components/table.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/sub-grupos-itens/feature.tsx",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/sub-grupos-itens/feature.tsx"
+        },
+        {
+          "path": "src/features/(cadastros)/sub-grupos-itens/utils/constants.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/sub-grupos-itens/utils/constants.ts"
+        },
+        {
+          "path": "src/features/(cadastros)/sub-grupos-itens/utils/module-utils.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(cadastros)/sub-grupos-itens/utils/module-utils.ts"
+        },
+        {
+          "path": "src/types/sub-grupos-itens/types.ts",
+          "type": "registry:lib",
+          "target": "~/src/types/sub-grupos-itens/types.ts"
+        }
+      ],
+      "categories": [
+        "cadastros"
+      ],
+      "registryDependencies": [
+        "@kso/base"
+      ]
+    },
+    {
       "name": "cadastros",
       "type": "registry:block",
-      "title": "Cadastros (piloto)",
-      "description": "Meta-item sem arquivos próprios: instala de uma vez o subconjunto de módulos de cadastro já publicados neste registry. Os demais módulos de (cadastros) ainda não foram migrados — ver docs/registry.md.",
+      "title": "Cadastros",
+      "description": "Meta-item sem arquivos próprios: instala de uma vez todos os módulos de cadastro de organização e inventário (src/features/(cadastros)/).",
       "files": [],
       "registryDependencies": [
         "@kso/lojas",
@@ -775,7 +1528,319 @@
         "@kso/tabelas-precos",
         "@kso/itens",
         "@kso/grupos-itens",
-        "@kso/unidade-medida"
+        "@kso/unidade-medida",
+        "@kso/cargos",
+        "@kso/centros-custos",
+        "@kso/colaboradores",
+        "@kso/formas-pagamentos",
+        "@kso/fornecedores",
+        "@kso/gerencias",
+        "@kso/grupos-lojas",
+        "@kso/motivos-trocas",
+        "@kso/pessoas",
+        "@kso/setores",
+        "@kso/sub-grupos-itens"
+      ]
+    },
+    {
+      "name": "users",
+      "type": "registry:block",
+      "title": "Usuários",
+      "description": "Controle de usuários (contas), com atribuição de roles.",
+      "files": [
+        {
+          "path": "src/app/(root)/users/(pages)/layout.tsx",
+          "type": "registry:page",
+          "target": "~/src/app/(root)/users/(pages)/layout.tsx"
+        },
+        {
+          "path": "src/app/(root)/users/(pages)/page.tsx",
+          "type": "registry:page",
+          "target": "~/src/app/(root)/users/(pages)/page.tsx"
+        },
+        {
+          "path": "src/features/(seguranca)/users/components/users-columns.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(seguranca)/users/components/users-columns.tsx"
+        },
+        {
+          "path": "src/features/(seguranca)/users/components/users-confirm-delete.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(seguranca)/users/components/users-confirm-delete.tsx"
+        },
+        {
+          "path": "src/features/(seguranca)/users/components/users-form.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(seguranca)/users/components/users-form.tsx"
+        },
+        {
+          "path": "src/features/(seguranca)/users/components/users-table.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(seguranca)/users/components/users-table.tsx"
+        },
+        {
+          "path": "src/features/(seguranca)/users/constants/modal-keys.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(seguranca)/users/constants/modal-keys.ts"
+        },
+        {
+          "path": "src/features/(seguranca)/users/feature.tsx",
+          "type": "registry:lib",
+          "target": "~/src/features/(seguranca)/users/feature.tsx"
+        },
+        {
+          "path": "src/features/(seguranca)/users/interfaces/users.d.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(seguranca)/users/interfaces/users.d.ts"
+        },
+        {
+          "path": "src/features/(seguranca)/users/utils/module-utils.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(seguranca)/users/utils/module-utils.ts"
+        }
+      ],
+      "categories": [
+        "administrativo"
+      ],
+      "registryDependencies": [
+        "@kso/base",
+        "@kso/lojas",
+        "@kso/roles",
+        "@kso/setores"
+      ]
+    },
+    {
+      "name": "roles",
+      "type": "registry:block",
+      "title": "Papéis (Roles)",
+      "description": "Cadastro de papéis/roles, vinculados a módulos de permissão.",
+      "files": [
+        {
+          "path": "src/app/(root)/users/(pages)/roles/page.tsx",
+          "type": "registry:page",
+          "target": "~/src/app/(root)/users/(pages)/roles/page.tsx"
+        },
+        {
+          "path": "src/features/(seguranca)/users/interfaces/roles.d.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(seguranca)/users/interfaces/roles.d.ts"
+        },
+        {
+          "path": "src/features/(seguranca)/users/roles/components/roles-columns.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(seguranca)/users/roles/components/roles-columns.tsx"
+        },
+        {
+          "path": "src/features/(seguranca)/users/roles/components/roles-confirm-delete.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(seguranca)/users/roles/components/roles-confirm-delete.tsx"
+        },
+        {
+          "path": "src/features/(seguranca)/users/roles/components/roles-form.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(seguranca)/users/roles/components/roles-form.tsx"
+        },
+        {
+          "path": "src/features/(seguranca)/users/roles/components/roles-table.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(seguranca)/users/roles/components/roles-table.tsx"
+        },
+        {
+          "path": "src/features/(seguranca)/users/roles/feature.tsx",
+          "type": "registry:lib",
+          "target": "~/src/features/(seguranca)/users/roles/feature.tsx"
+        },
+        {
+          "path": "src/features/(seguranca)/users/schemas/roles.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(seguranca)/users/schemas/roles.ts"
+        }
+      ],
+      "categories": [
+        "administrativo"
+      ],
+      "registryDependencies": [
+        "@kso/base",
+        "@kso/modules",
+        "@kso/users"
+      ]
+    },
+    {
+      "name": "permissions",
+      "type": "registry:block",
+      "title": "Permissões",
+      "description": "Cadastro de permissões, vinculadas a roles e módulos.",
+      "files": [
+        {
+          "path": "src/app/(root)/users/(pages)/permissions/page.tsx",
+          "type": "registry:page",
+          "target": "~/src/app/(root)/users/(pages)/permissions/page.tsx"
+        },
+        {
+          "path": "src/features/(seguranca)/users/interfaces/permissions.d.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(seguranca)/users/interfaces/permissions.d.ts"
+        },
+        {
+          "path": "src/features/(seguranca)/users/permissions/components/permissions-columns.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(seguranca)/users/permissions/components/permissions-columns.tsx"
+        },
+        {
+          "path": "src/features/(seguranca)/users/permissions/components/permissions-confirm-delete.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(seguranca)/users/permissions/components/permissions-confirm-delete.tsx"
+        },
+        {
+          "path": "src/features/(seguranca)/users/permissions/components/permissions-form.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(seguranca)/users/permissions/components/permissions-form.tsx"
+        },
+        {
+          "path": "src/features/(seguranca)/users/permissions/components/permissions-table.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(seguranca)/users/permissions/components/permissions-table.tsx"
+        },
+        {
+          "path": "src/features/(seguranca)/users/permissions/feature.tsx",
+          "type": "registry:lib",
+          "target": "~/src/features/(seguranca)/users/permissions/feature.tsx"
+        },
+        {
+          "path": "src/features/(seguranca)/users/schemas/permissions.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(seguranca)/users/schemas/permissions.ts"
+        }
+      ],
+      "categories": [
+        "administrativo"
+      ],
+      "registryDependencies": [
+        "@kso/base",
+        "@kso/modules",
+        "@kso/roles",
+        "@kso/users"
+      ]
+    },
+    {
+      "name": "systems",
+      "type": "registry:block",
+      "title": "Sistemas",
+      "description": "Cadastro de sistemas (aplicações que consomem as permissões).",
+      "files": [
+        {
+          "path": "src/app/(root)/users/(pages)/systems/page.tsx",
+          "type": "registry:page",
+          "target": "~/src/app/(root)/users/(pages)/systems/page.tsx"
+        },
+        {
+          "path": "src/features/(seguranca)/users/schemas/systems.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(seguranca)/users/schemas/systems.ts"
+        },
+        {
+          "path": "src/features/(seguranca)/users/systems/components/systems-columns.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(seguranca)/users/systems/components/systems-columns.tsx"
+        },
+        {
+          "path": "src/features/(seguranca)/users/systems/components/systems-confirm-delete.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(seguranca)/users/systems/components/systems-confirm-delete.tsx"
+        },
+        {
+          "path": "src/features/(seguranca)/users/systems/components/systems-form.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(seguranca)/users/systems/components/systems-form.tsx"
+        },
+        {
+          "path": "src/features/(seguranca)/users/systems/components/systems-table.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(seguranca)/users/systems/components/systems-table.tsx"
+        },
+        {
+          "path": "src/features/(seguranca)/users/systems/feature.tsx",
+          "type": "registry:lib",
+          "target": "~/src/features/(seguranca)/users/systems/feature.tsx"
+        }
+      ],
+      "categories": [
+        "administrativo"
+      ],
+      "registryDependencies": [
+        "@kso/base",
+        "@kso/modules",
+        "@kso/users"
+      ]
+    },
+    {
+      "name": "modules",
+      "type": "registry:block",
+      "title": "Módulos (Grupos de Permissão)",
+      "description": "Cadastro de módulos/grupos de permissão.",
+      "files": [
+        {
+          "path": "src/app/(root)/users/(pages)/modules/page.tsx",
+          "type": "registry:page",
+          "target": "~/src/app/(root)/users/(pages)/modules/page.tsx"
+        },
+        {
+          "path": "src/features/(seguranca)/users/interfaces/modules.d.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(seguranca)/users/interfaces/modules.d.ts"
+        },
+        {
+          "path": "src/features/(seguranca)/users/modules/components/modules-columns.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(seguranca)/users/modules/components/modules-columns.tsx"
+        },
+        {
+          "path": "src/features/(seguranca)/users/modules/components/modules-confirm-delete.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(seguranca)/users/modules/components/modules-confirm-delete.tsx"
+        },
+        {
+          "path": "src/features/(seguranca)/users/modules/components/modules-form.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(seguranca)/users/modules/components/modules-form.tsx"
+        },
+        {
+          "path": "src/features/(seguranca)/users/modules/components/modules-table.tsx",
+          "type": "registry:component",
+          "target": "~/src/features/(seguranca)/users/modules/components/modules-table.tsx"
+        },
+        {
+          "path": "src/features/(seguranca)/users/modules/feature.tsx",
+          "type": "registry:lib",
+          "target": "~/src/features/(seguranca)/users/modules/feature.tsx"
+        },
+        {
+          "path": "src/features/(seguranca)/users/schemas/modules.ts",
+          "type": "registry:lib",
+          "target": "~/src/features/(seguranca)/users/schemas/modules.ts"
+        }
+      ],
+      "categories": [
+        "administrativo"
+      ],
+      "registryDependencies": [
+        "@kso/base",
+        "@kso/permissions",
+        "@kso/users"
+      ]
+    },
+    {
+      "name": "administrativo",
+      "type": "registry:block",
+      "title": "Administrativo (Usuários, Roles, Permissões)",
+      "description": "Meta-item sem arquivos próprios: instala de uma vez o grupo de controle de acesso (src/features/(seguranca)/users/) — usuários, roles, permissões, sistemas e módulos de permissão.",
+      "files": [],
+      "registryDependencies": [
+        "@kso/users",
+        "@kso/roles",
+        "@kso/permissions",
+        "@kso/systems",
+        "@kso/modules"
       ]
     },
     {

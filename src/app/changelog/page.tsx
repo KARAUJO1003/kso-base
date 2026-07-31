@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DocsSiteHeader } from "@/components/docs/site-header";
+import { MarketingHeader } from "@/components/shared/marketing-header";
 import { CHANGELOG } from "@/lib/changelog";
 
 export const metadata: Metadata = {
@@ -17,7 +17,7 @@ function formatDate(iso: string) {
 export default function ChangelogPage() {
   return (
     <div className="flex min-h-screen flex-col">
-      <DocsSiteHeader />
+      <MarketingHeader />
       <div className="mx-auto w-full max-w-3xl flex-1 px-4 py-12 md:px-6">
         <h1 className="text-4xl font-semibold tracking-tight">Changelog</h1>
         <p className="mt-2 text-muted-foreground">

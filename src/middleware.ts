@@ -25,11 +25,14 @@ export default async function middleware(request: NextRequest) {
   }
 
   if (
+    url === "/" ||
     url.startsWith("/api") ||
     url.startsWith("/_next/static") ||
     url.startsWith("/_next/image") ||
     url.startsWith("/docs") ||
     url.startsWith("/changelog") ||
+    url.startsWith("/blocks") ||
+    url.startsWith("/components") ||
     url === "/favicon.ico" ||
     url === "/sitemap.xml" ||
     url === "/robots.txt" ||

@@ -7,13 +7,24 @@
 // Saída: JSON em stdout { files, npmPackages, unresolved }
 
 import { readFileSync, existsSync } from "node:fs";
-import { resolve, dirname, join, extname } from "node:path";
+import { resolve, dirname, join, extname, relative, sep } from "node:path";
 
 const ROOT = resolve(import.meta.dirname, "..", "..");
 const SRC = join(ROOT, "src");
 
+// Windows resolve()/join() devolvem caminho com "\", mas todo o resto do
+// pipeline (classify.mjs, direct-cross-refs.mjs, regexes abaixo) espera
+// caminho relativo estilo POSIX ("src/features/..."). Sem isso, no Windows
+// nenhuma regex bate e tudo cai em "base" por engano.
+function toRelPosix(absPath) {
+  return relative(ROOT, absPath).split(sep).join("/");
+}
+
 const IMPORT_RE = /(?:import|export)\s+(?:type\s+)?(?:[\s\S]*?)\s+from\s+["']([^"']+)["']|import\s*\(\s*["']([^"']+)["']\s*\)|require\(\s*["']([^"']+)["']\s*\)/g;
-const CANDIDATE_EXT = [".ts", ".tsx", ".js", ".jsx"];
+// ".d.ts" precisa vir antes de ".ts": `base + ".ts"` nunca bate pra um
+// arquivo tipo "roles.d.ts" (o nome real seria "roles.d.ts", não "roles.ts"),
+// mas checar as duas não faz mal — só uma vai existir de fato.
+const CANDIDATE_EXT = [".d.ts", ".ts", ".tsx", ".js", ".jsx"];
 
 // Infra exclusiva do modo demo deste repo (dados fake, deploy sem backend —
 // ver content/docs/mock-data.mdx). Nunca deve entrar no registry: um projeto
@@ -89,19 +100,19 @@ function traceFrom(entryFiles) {
 
       const resolved = resolveSpecifier(specifier, file);
       if (resolved.kind === "file") {
-        const relPath = resolved.path.replace(ROOT + "/", "");
+        const relPath = toRelPosix(resolved.path);
         if (isExcludedPath(relPath)) continue;
         if (!files.has(resolved.path)) queue.push(resolved.path);
       } else if (resolved.kind === "npm") {
         npmPackages.add(resolved.name);
       } else {
-        unresolved.add(`${specifier} (from ${file.replace(ROOT + "/", "")})`);
+        unresolved.add(`${specifier} (from ${toRelPosix(file)})`);
       }
     }
   }
 
   return {
-    files: [...files].map((f) => f.replace(ROOT + "/", "")).sort(),
+    files: [...files].map((f) => toRelPosix(f)).sort(),
     npmPackages: [...npmPackages].sort(),
     unresolved: [...unresolved].sort(),
   };

@@ -34,6 +34,7 @@ const STOCK_SHADCN_NAMES = new Set([
 const TYPE_DIR_TO_MODULE_SLUG = {
   deposito: "depositos",
   items: "itens",
+  gerencia: "gerencias",
 };
 
 // idem, mas para a pasta de rota em src/app/(root)/(cadastros)/<rota>/ —
@@ -41,6 +42,57 @@ const TYPE_DIR_TO_MODULE_SLUG = {
 const MODULE_SLUG_TO_ROUTE_SLUG = {
   "unidade-medida": "unidades-medidas",
 };
+
+// Módulos cuja rota não vive sob (root)/(cadastros)/<slug>/ (ex: setores fica
+// direto em (root)/setores/). Mesma lista que ROUTE_BASE_OVERRIDES em
+// build-manifests.mjs — mantidas separadas porque os scripts rodam como
+// processos independentes.
+const MODULE_ROUTE_BASE_OVERRIDES = {
+  setores: "src/app/(root)/setores",
+};
+
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+// Grupo (seguranca)/users: estrutura diferente de (cadastros) — os módulos
+// "roles"/"permissions"/"systems"/"modules" são SUBPASTAS de "users" (não
+// irmãs dele), e os arquivos de interfaces/schemas de cada um moram soltos
+// na pasta do pai (users/interfaces/<slug>.d.ts, users/schemas/<slug>.ts),
+// não numa subpasta própria. O regex genérico de (cadastros) não dá conta
+// disso, então este é o mapa de ownership explícito complementar (ver
+// docs/registry.md).
+const SEGURANCA_ROOT = "src/features/(seguranca)/users/";
+const SEGURANCA_PAGE_ROOT = "src/app/(root)/users/(pages)/";
+const SEGURANCA_NESTED_SLUGS = new Set(["roles", "permissions", "systems", "modules"]);
+const SEGURANCA_FILE_OWNERS = {
+  "src/features/(seguranca)/users/interfaces/roles.d.ts": "roles",
+  "src/features/(seguranca)/users/interfaces/permissions.d.ts": "permissions",
+  "src/features/(seguranca)/users/interfaces/modules.d.ts": "modules",
+  "src/features/(seguranca)/users/schemas/roles.ts": "roles",
+  "src/features/(seguranca)/users/schemas/permissions.ts": "permissions",
+  "src/features/(seguranca)/users/schemas/modules.ts": "modules",
+  "src/features/(seguranca)/users/schemas/systems.ts": "systems",
+};
+
+// Retorna o slug do módulo dono de `file`, ou null se `file` não pertence a
+// este grupo (nesse caso cai nas outras checagens de classify.mjs abaixo).
+function segurancaOwner(file) {
+  if (file.startsWith(SEGURANCA_ROOT)) {
+    const rest = file.slice(SEGURANCA_ROOT.length);
+    const nested = rest.match(/^([^/]+)\//);
+    if (nested && SEGURANCA_NESTED_SLUGS.has(nested[1])) return nested[1];
+    if (SEGURANCA_FILE_OWNERS[file]) return SEGURANCA_FILE_OWNERS[file];
+    return "users"; // arquivo solto na pasta do pai, sem override -> é do users
+  }
+  if (file.startsWith(SEGURANCA_PAGE_ROOT)) {
+    const rest = file.slice(SEGURANCA_PAGE_ROOT.length);
+    if (rest === "page.tsx" || rest === "layout.tsx") return "users";
+    const nested = rest.match(/^([^/]+)\/page\.tsx$/);
+    if (nested && SEGURANCA_NESTED_SLUGS.has(nested[1])) return nested[1];
+  }
+  return null;
+}
 
 const [moduleSlug] = process.argv.slice(2);
 if (!moduleSlug) {
@@ -60,7 +112,9 @@ const cadastroModuleRe = /^src\/features\/\(cadastros\)\/([^/]+)\//;
 const uiRe = /^src\/components\/ui\/([^/]+)\.tsx?$/;
 const reuiRe = /^src\/components\/reui\/([^/]+)\.tsx?$/;
 const routeSlug = MODULE_SLUG_TO_ROUTE_SLUG[moduleSlug] || moduleSlug;
-const ownPageRe = new RegExp(`^src/app/\\(root\\)/\\(cadastros\\)/${routeSlug}/`);
+const routeBase =
+  MODULE_ROUTE_BASE_OVERRIDES[moduleSlug] || `src/app/(root)/(cadastros)/${routeSlug}`;
+const ownPageRe = new RegExp(`^${escapeRegExp(routeBase)}/`);
 
 function resolveModuleSlugForTypesDir(typeSlug) {
   if (TYPE_DIR_TO_MODULE_SLUG[typeSlug]) return TYPE_DIR_TO_MODULE_SLUG[typeSlug];
@@ -68,6 +122,16 @@ function resolveModuleSlugForTypesDir(typeSlug) {
 }
 
 for (const file of input.files) {
+  const segOwner = segurancaOwner(file);
+  if (segOwner) {
+    if (segOwner === moduleSlug) own.push(file);
+    else {
+      if (!crossModule.has(segOwner)) crossModule.set(segOwner, []);
+      crossModule.get(segOwner).push(file);
+    }
+    continue;
+  }
+
   const cadastroMatch = file.match(cadastroModuleRe);
   if (cadastroMatch) {
     const otherSlug = cadastroMatch[1];

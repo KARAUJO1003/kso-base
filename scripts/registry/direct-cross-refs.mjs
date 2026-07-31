@@ -9,14 +9,46 @@
 // Uso: node scripts/registry/direct-cross-refs.mjs <module-slug> <ownFile1> [ownFile2 ...]
 
 import { readFileSync, existsSync } from "node:fs";
-import { resolve, dirname, join, extname } from "node:path";
+import { resolve, dirname, join, extname, relative, sep } from "node:path";
 
 const ROOT = resolve(import.meta.dirname, "..", "..");
 const SRC = join(ROOT, "src");
-const IMPORT_RE = /(?:import|export)\s+(?:type\s+)?(?:[\s\S]*?)\s+from\s+["']([^"']+)["']|import\s*\(\s*["']([^"']+)["']\s*\)|require\(\s*["']([^"']+)["']\s*\)/g;
-const CANDIDATE_EXT = [".ts", ".tsx", ".js", ".jsx"];
 
-const TYPE_DIR_TO_MODULE_SLUG = { deposito: "depositos", items: "itens" };
+// Ver comentário equivalente em trace-imports.mjs: no Windows, resolve()/join()
+// devolvem "\" e as regexes abaixo esperam caminho relativo estilo POSIX.
+function toRelPosix(absPath) {
+  return relative(ROOT, absPath).split(sep).join("/");
+}
+const IMPORT_RE = /(?:import|export)\s+(?:type\s+)?(?:[\s\S]*?)\s+from\s+["']([^"']+)["']|import\s*\(\s*["']([^"']+)["']\s*\)|require\(\s*["']([^"']+)["']\s*\)/g;
+// Ver comentário em trace-imports.mjs — ".d.ts" precisa entrar pra resolver
+// os arquivos de interface do grupo (seguranca)/users (roles.d.ts etc).
+const CANDIDATE_EXT = [".d.ts", ".ts", ".tsx", ".js", ".jsx"];
+
+const TYPE_DIR_TO_MODULE_SLUG = { deposito: "depositos", items: "itens", gerencia: "gerencias" };
+
+// Ver comentário completo em classify.mjs — mesmo mapa de ownership pro
+// grupo (seguranca)/users, mantido duplicado de propósito (scripts
+// independentes, mesmo padrão já usado por TYPE_DIR_TO_MODULE_SLUG acima).
+const SEGURANCA_ROOT = "src/features/(seguranca)/users/";
+const SEGURANCA_NESTED_SLUGS = new Set(["roles", "permissions", "systems", "modules"]);
+const SEGURANCA_FILE_OWNERS = {
+  "src/features/(seguranca)/users/interfaces/roles.d.ts": "roles",
+  "src/features/(seguranca)/users/interfaces/permissions.d.ts": "permissions",
+  "src/features/(seguranca)/users/interfaces/modules.d.ts": "modules",
+  "src/features/(seguranca)/users/schemas/roles.ts": "roles",
+  "src/features/(seguranca)/users/schemas/permissions.ts": "permissions",
+  "src/features/(seguranca)/users/schemas/modules.ts": "modules",
+  "src/features/(seguranca)/users/schemas/systems.ts": "systems",
+};
+
+function segurancaOwner(file) {
+  if (!file.startsWith(SEGURANCA_ROOT)) return null;
+  const rest = file.slice(SEGURANCA_ROOT.length);
+  const nested = rest.match(/^([^/]+)\//);
+  if (nested && SEGURANCA_NESTED_SLUGS.has(nested[1])) return nested[1];
+  if (SEGURANCA_FILE_OWNERS[file]) return SEGURANCA_FILE_OWNERS[file];
+  return "users";
+}
 
 function resolveSpecifier(specifier, fromFile) {
   let base;
@@ -48,7 +80,13 @@ for (const relFile of ownFiles) {
     if (!specifier) continue;
     const resolved = resolveSpecifier(specifier, file);
     if (!resolved) continue;
-    const relResolved = resolved.replace(ROOT + "/", "");
+    const relResolved = toRelPosix(resolved);
+
+    const segOwner = segurancaOwner(relResolved);
+    if (segOwner) {
+      if (segOwner !== moduleSlug) crossModules.add(segOwner);
+      continue;
+    }
 
     const featureMatch = relResolved.match(/^src\/features\/\(cadastros\)\/([^/]+)\//);
     if (featureMatch && featureMatch[1] !== moduleSlug) {

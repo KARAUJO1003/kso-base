@@ -11,13 +11,36 @@ import { join } from "node:path";
 const ROOT = join(import.meta.dirname, "..", "..");
 const MANIFEST_DIR = join(ROOT, "scripts", "registry", "manifests");
 
-const PILOT_MODULES = {
+const CADASTRO_MODULES = {
   lojas: { title: "Lojas", description: "Cadastro de lojas, com identidade visual (branding) por loja." },
   depositos: { title: "Depósitos", description: "Cadastro de depósitos vinculados a uma loja." },
   "tabelas-precos": { title: "Tabelas de Preço", description: "Cadastro de tabelas de preço e itens de preço." },
   itens: { title: "Itens", description: "Cadastro de itens (produtos), com estoque e composição." },
   "grupos-itens": { title: "Grupos de Itens", description: "Cadastro de grupos de itens." },
   "unidade-medida": { title: "Unidade de Medida", description: "Cadastro de unidades de medida por loja." },
+  cargos: { title: "Cargos", description: "Cadastro de cargos." },
+  "centros-custos": { title: "Centro de Custos", description: "Cadastro de centros de custo." },
+  colaboradores: { title: "Colaboradores", description: "Cadastro de colaboradores." },
+  "formas-pagamentos": { title: "Formas de Pagamento", description: "Cadastro de formas de pagamento." },
+  fornecedores: { title: "Fornecedores", description: "Cadastro de fornecedores." },
+  gerencias: { title: "Gerências", description: "Cadastro de gerências." },
+  "grupos-lojas": { title: "Grupo de Lojas", description: "Cadastro de grupos de lojas." },
+  "motivos-trocas": { title: "Motivos de Trocas", description: "Cadastro de motivos de trocas." },
+  pessoas: { title: "Pessoas (Físicas / Jurídicas)", description: "Cadastro de pessoas físicas e jurídicas." },
+  setores: { title: "Setores", description: "Cadastro de setores." },
+  "sub-grupos-itens": { title: "Sub Grupos de Itens", description: "Cadastro de sub grupos de itens, vinculados a um grupo de itens." },
+};
+
+// Grupo (seguranca)/users — fora de (cadastros), estrutura de pastas
+// diferente (ver classify.mjs). "users" e "roles" se referenciam um ao
+// outro (um usuário tem role, um form de role lista módulos) — dependência
+// circular real do domínio, não erro de classificação.
+const SEGURANCA_MODULES = {
+  users: { title: "Usuários", description: "Controle de usuários (contas), com atribuição de roles." },
+  roles: { title: "Papéis (Roles)", description: "Cadastro de papéis/roles, vinculados a módulos de permissão." },
+  permissions: { title: "Permissões", description: "Cadastro de permissões, vinculadas a roles e módulos." },
+  systems: { title: "Sistemas", description: "Cadastro de sistemas (aplicações que consomem as permissões)." },
+  modules: { title: "Módulos (Grupos de Permissão)", description: "Cadastro de módulos/grupos de permissão." },
 };
 
 function fileType(path) {
@@ -59,7 +82,7 @@ items.push({
   dependencies: baseUnion.npmPackages,
 });
 
-for (const [slug, meta] of Object.entries(PILOT_MODULES)) {
+for (const [slug, meta] of Object.entries(CADASTRO_MODULES)) {
   const manifest = loadManifest(slug);
   const crossModules = crossRefs[slug] || [];
   items.push({
@@ -68,6 +91,7 @@ for (const [slug, meta] of Object.entries(PILOT_MODULES)) {
     title: meta.title,
     description: meta.description,
     files: manifest.own.map(toFileEntry),
+    categories: ["cadastros"],
     registryDependencies: [
       "@kso/base",
       ...crossModules.map((m) => `@kso/${m}`),
@@ -78,13 +102,41 @@ for (const [slug, meta] of Object.entries(PILOT_MODULES)) {
 items.push({
   name: "cadastros",
   type: "registry:block",
-  title: "Cadastros (piloto)",
+  title: "Cadastros",
   description:
-    "Meta-item sem arquivos próprios: instala de uma vez o subconjunto de módulos de " +
-    "cadastro já publicados neste registry. Os demais módulos de (cadastros) ainda não " +
-    "foram migrados — ver docs/registry.md.",
+    "Meta-item sem arquivos próprios: instala de uma vez todos os módulos de " +
+    "cadastro de organização e inventário (src/features/(cadastros)/).",
   files: [],
-  registryDependencies: Object.keys(PILOT_MODULES).map((slug) => `@kso/${slug}`),
+  registryDependencies: Object.keys(CADASTRO_MODULES).map((slug) => `@kso/${slug}`),
+});
+
+for (const [slug, meta] of Object.entries(SEGURANCA_MODULES)) {
+  const manifest = loadManifest(slug);
+  const crossModules = crossRefs[slug] || [];
+  items.push({
+    name: slug,
+    type: "registry:block",
+    title: meta.title,
+    description: meta.description,
+    files: manifest.own.map(toFileEntry),
+    categories: ["administrativo"],
+    registryDependencies: [
+      "@kso/base",
+      ...crossModules.map((m) => `@kso/${m}`),
+    ],
+  });
+}
+
+items.push({
+  name: "administrativo",
+  type: "registry:block",
+  title: "Administrativo (Usuários, Roles, Permissões)",
+  description:
+    "Meta-item sem arquivos próprios: instala de uma vez o grupo de controle de " +
+    "acesso (src/features/(seguranca)/users/) — usuários, roles, permissões, " +
+    "sistemas e módulos de permissão.",
+  files: [],
+  registryDependencies: Object.keys(SEGURANCA_MODULES).map((slug) => `@kso/${slug}`),
 });
 
 items.push({
