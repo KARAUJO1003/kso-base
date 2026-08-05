@@ -56,6 +56,7 @@
     "src/features/(cadastros)/fornecedores/feature.tsx",
     "src/features/(cadastros)/fornecedores/utils/constants.ts",
     "src/features/(cadastros)/fornecedores/utils/module-utils.ts",
+    "src/features/(cadastros)/pessoas/utils/module-utils.ts",
     "src/hooks/use-crud.ts",
     "src/hooks/use-debounce-fn.ts",
     "src/hooks/use-debounce.ts",
@@ -97,7 +98,6 @@
   ],
   "npmPackages": [
     "@base-ui/react",
-    "@features/(cadastros)",
     "@hookform/resolvers",
     "@radix-ui/react-icons",
     "@tabler/icons-react",

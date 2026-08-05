@@ -13,11 +13,12 @@
     "src/types/fornecedores/types.ts"
   ],
   "crossModule": {
+    "pessoas": [
+      "src/features/(cadastros)/pessoas/utils/module-utils.ts",
+      "src/types/pessoas/types.ts"
+    ],
     "lojas": [
       "src/types/lojas/types.ts"
-    ],
-    "pessoas": [
-      "src/types/pessoas/types.ts"
     ]
   },
   "stockUi": [
@@ -110,7 +111,6 @@
   ],
   "npmPackages": [
     "@base-ui/react",
-    "@features/(cadastros)",
     "@hookform/resolvers",
     "@radix-ui/react-icons",
     "@tabler/icons-react",

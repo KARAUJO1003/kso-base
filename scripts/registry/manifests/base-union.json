@@ -104,7 +104,6 @@
   ],
   "npmPackages": [
     "@base-ui/react",
-    "@features/(cadastros)",
     "@hookform/resolvers",
     "@radix-ui/react-icons",
     "@tabler/icons-react",

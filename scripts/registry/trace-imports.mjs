@@ -10,7 +10,22 @@ import { readFileSync, existsSync } from "node:fs";
 import { resolve, dirname, join, extname, relative, sep } from "node:path";
 
 const ROOT = resolve(import.meta.dirname, "..", "..");
-const SRC = join(ROOT, "src");
+
+// Carrega TODOS os path aliases do tsconfig.json (não só "@/*"). O projeto
+// também define "@features/*", "@components/*", "@lib/*", "@types/*" etc.
+// Antes só "@/*" era reconhecido como alias interno, então specifiers como
+// "@features/(cadastros)/gerencias/..." caíam no branch "npm" por engano e
+// viravam uma "dependência npm" fantasma (@features/(cadastros)) no registry.
+const tsconfig = JSON.parse(readFileSync(join(ROOT, "tsconfig.json"), "utf8"));
+const rawPaths = tsconfig.compilerOptions?.paths || {};
+const ALIASES = Object.entries(rawPaths)
+  .map(([key, targets]) => ({
+    prefix: key.replace(/\*$/, ""),
+    target: targets[0].replace(/^\.\//, "").replace(/\*$/, ""),
+  }))
+  // Prefixos mais específicos primeiro (ex.: "@/root/*" antes de "@/*"),
+  // senão "@/*" sempre vence e "@/root/..." nunca resolve pro alvo certo.
+  .sort((a, b) => b.prefix.length - a.prefix.length);
 
 // Windows resolve()/join() devolvem caminho com "\", mas todo o resto do
 // pipeline (classify.mjs, direct-cross-refs.mjs, regexes abaixo) espera
@@ -42,8 +57,9 @@ function isExcludedPath(relPath) {
 
 function resolveSpecifier(specifier, fromFile) {
   let base;
-  if (specifier.startsWith("@/")) {
-    base = join(SRC, specifier.slice(2));
+  const alias = ALIASES.find((a) => specifier.startsWith(a.prefix));
+  if (alias) {
+    base = join(ROOT, alias.target, specifier.slice(alias.prefix.length));
   } else if (specifier.startsWith(".")) {
     base = join(dirname(fromFile), specifier);
   } else {
